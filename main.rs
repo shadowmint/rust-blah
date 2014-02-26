@@ -1,8 +1,7 @@
-use walk::walk;
+#[feature(macro_rules)];
 
+mod _macros;
 mod walk;
 
 fn main() {
-  walk(~".");
-  walk(~"Sfdsdf");
 }
