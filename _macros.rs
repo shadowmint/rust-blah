@@ -1,8 +1,5 @@
 #[macro_escape];
 
-use std::io::stdout;
-use std::fmt;
-
 #[macro_export]
 macro_rules! trace(
   ($($arg:tt)*) => (
