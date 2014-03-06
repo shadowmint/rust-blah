@@ -15,6 +15,13 @@ pub fn walk(path:~str) {
 }
 
 #[test]
+fn test_how_path_works() {
+  let path = ~Path::new(~"xxx");
+  let p2 = path.join("things").join("blah").join("dsfdsf");
+  trace!("{}", p2.display());
+}
+
+#[test]
 fn test_walk_works() {
   walk(~".");
 }
