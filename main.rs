@@ -1,10 +1,12 @@
 #[feature(macro_rules)];
 
+extern crate uuid;
+
 mod _macros;
-mod tuples;
-mod infer_type;
-mod traits;
-mod walk;
-mod output;
+//mod tuples;
+//mod infer_type;
+//mod traits;
+//mod walk;
+//mod output;
 mod lifetime;
-mod union;
+//mod union;
