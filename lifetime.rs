@@ -1,11 +1,12 @@
 use uuid::Uuid;
 use std::fmt;
 
-struct BlahLF {
-  id: Uuid
-}
-
 struct StateLF;
+
+struct BlahLF {
+  id: Uuid,
+  state: StateLF
+}
 
 impl BlahLF {
   fn new() -> BlahLF {
@@ -13,11 +14,11 @@ impl BlahLF {
       trace!("Created: {}", id);
       return BlahLF { 
         id: id,
-        state: State
+        state: StateLF
       };
   }
-  fn state(&mut self) -> &State {
-    return self.state;
+  fn state<'a>(&'a mut self) -> &'a StateLF {
+    return &self.state;
   }
 }
 
@@ -35,7 +36,10 @@ impl Drop for BlahLF {
 
 #[test]
 fn test_lifetime_scope() {
-  let x = BlahLF::new();
+  let mut x:~BlahLF = ~BlahLF::new();
   let y = x.state();
-  x = BlahLF::new();
+  let z = ~BlahLF::new();
+  
+  // NB. We can't do this because x has a borrowed state
+  // x = ~BlahLF::new();
 }
