@@ -5,7 +5,7 @@ struct VItem {
 }
 
 // NB. We're using the 'a' lifetime to force the type interference on collect()
-fn v1 (a:~[&'a str]) -> ~[&'a str] {
+fn v1<'a> (a:~[&'a str]) -> ~[&'a str] {
   return a;
 }
 

@@ -1,3 +1,4 @@
+use std::default::Default;
 use _macros;
 
 struct CItem {
