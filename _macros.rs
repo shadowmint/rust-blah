@@ -3,7 +3,7 @@
 #[macro_export]
 macro_rules! trace(
   ($($arg:tt)*) => (
-    ::std::io::stdout().write_line(format_args!(::std::fmt::format, $($arg)*))
+    { ::std::io::stdout().write_line(format_args!(::std::fmt::format, $($arg)*)); }
   );
 )
 
