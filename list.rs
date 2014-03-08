@@ -18,30 +18,11 @@ trait Array<T> {
   fn all(&mut self) -> ~[T];*/
 }
 
-
-// An unsafe pointer type
-struct RawNode<T> {
-  p: *mut T  
-}
-
-impl<T> RawNode<T> {
-  fn None() -> RawNode<T> {
-    return RawNode { p: ptr::mut_null() };
-  }
-  fn Some(t:T) -> RawNode<T> {
-    let mut rtn = RawNode::<T>::None();;
-    unsafe {
-      let rtn = RawNode { p: cast::transmute_mut_unsafe::<T>(&t) };
-    }
-    return rtn;
-  }
-}
-
-
 // Linked list node
 #[deriving(Eq, Show)]
 struct ListNode<T> {
   _next: Option<~ListNode<T>>,
+  _prev: Option<*ListNode<T>>,
   _data: Option<T>
 }
 
@@ -52,27 +33,56 @@ impl<T> ListNode<T> {
   // eg. let x:ListNode<ibt> = ListNode::new();
   // or  let x = ListNode::<int>::new();
   fn new() -> ListNode<T> {
-    return ListNode { _data: None::<T>, _next: None::<~ListNode<T>> };
+    return ListNode { _data: None::<T>, _next: None::<~ListNode<T>>, _prev: None::<*ListNode<T>> };
   }
 
   // Set the data value for this node
-  fn set(&mut self, x:T) {
+  fn set_data(&mut self, x:T) {
     self._data = Some(x);
   }
 
+  // Get the data value for this node 
+  fn get_data<'a> (&'a mut self) -> &'a Option<T> {
+    return &self._data;
+  }
+
+  // Set the previous pointer
+  fn set_prev(&mut self, mut prev: &ListNode<T>) {
+    unsafe {
+      self._prev = Some(prev as *ListNode<T>);
+    }
+  }
+
+  // Reset the previous pointer
+  fn reset_prev(&mut self) {
+    self._prev = None::<*ListNode<T>>;
+  }
+
   // Create a new next node and return it
-  fn add(&mut self, value:T) {
-    let mut next = ~ListNode::<T>::new();
-    next.set(value);
-    self._next = Some(next);
+  fn extend_next<'a>(&'a mut self, value:T) -> Result<&'a ~ListNode<T>, ListError> {
+    if (!self._next.is_none()) {
+      let mut next = ~ListNode::<T>::new();
+      next.set_data(value);
+      next.set_prev(self);
+      self._next = Some(next);
+      return Ok(&next);
+    }
+    return Err(NotEmpty);
+  }
+
+  // Discard next element and all additional elements on the chain
+  fn discard_next(&mut self) {
+    self._next = None::<~ListNode<T>>;
   }
 }
 
 #[test]
 fn test_create_list_node_instance() {
   let mut x:ListNode<int> = ListNode::new();
-  x.set(10);
-  x.add(11);
+  x.set_data(10);
+  x.extend_next(11);
+  x.extend_next(12);
+  x.discard_next();
   trace!("{}", x);
 }
 
@@ -85,7 +95,8 @@ struct List<T> {
 
 #[deriving(Eq)]
 enum ListError {
-  NoElements
+  NoElements,
+  NotEmpty
 }
 
 impl<T> List<T> {
