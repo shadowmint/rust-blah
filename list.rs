@@ -4,7 +4,6 @@ use std::ptr;
 
 #[deriving(Show)] 
 struct Node<T> {
-  _prev:* mut Node<T>,
   _next:Option<~Node<T>>,
   _data:T
 }
@@ -14,26 +13,14 @@ impl<T> Node<T> {
   /** Create a new Node holding the value T */
   fn new(t:T) -> Node<T> {
     return Node {
-      _prev: ptr::mut_null(),
       _next: None,
       _data: t
     };
   }
 
-  /** Return a pointer reference to this node */
-  fn unsafe_ref<'a>(&'a mut self) -> * mut Node<T> {
-    return self as * mut Node<T>;
-  }
-
   /** Attach a node as the 'next' node in this chain */
   fn set_next(&mut self, mut node: ~Node<T>) {
-    node.set_prev(ptr::mut_null());
     self._next = Some(node);
-  }
-
-  /** Attach a node as the 'prev' node in this chain */
-  fn set_prev(&mut self, node: * mut Node<T>) {
-    self._prev = node;
   }
 
   /** Get next node */
@@ -42,11 +29,6 @@ impl<T> Node<T> {
       Some(ref x) => return Ok(x),
       None => return Err(0)
     }
-  }
-
-  /** Get prev node */
-  fn prev(&mut self) -> * mut Node<T> {
-    return self._prev;
   }
 
   /** Return data instance */
@@ -67,10 +49,15 @@ fn test_create_node_chain() {
   let mut y = ~Node::new(11);
   let mut z = ~Node::new(12);
   x.set_next(y);
-  match x.next() {
+  let mut q = x.next();
+  match(q) {
+    Ok(e) => e.set_next(z),
+    Err(_) => trace!("None")
+  }
+  /*match x.next() {
     Ok(mut i) => i.set_next(z),
     Err(_) => {}
-  }
+  }*/
   /*z.set_prev(y.unsafe_ref());
   trace!("X -> Y -> Z");
   trace!("X: {}", x);
