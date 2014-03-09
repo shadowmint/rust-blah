@@ -37,8 +37,11 @@ impl<T> Node<T> {
   }
 
   /** Get next node */
-  fn next<'a> (&'a mut self) -> &'a ~Node<T> {
-    return &self._next.unwrap();
+  fn next<'a> (&'a mut self) -> Result<&'a ~Node<T>, int> {
+    match self._next {
+      Some(ref x) => return Ok(x),
+      None => return Err(0)
+    }
   }
 
   /** Get prev node */
@@ -64,7 +67,10 @@ fn test_create_node_chain() {
   let mut y = ~Node::new(11);
   let mut z = ~Node::new(12);
   x.set_next(y);
-  x.next().set_next(z);
+  match x.next() {
+    Ok(mut i) => i.set_next(z),
+    Err(_) => {}
+  }
   /*z.set_prev(y.unsafe_ref());
   trace!("X -> Y -> Z");
   trace!("X: {}", x);

@@ -12,5 +12,5 @@ mod _macros;
 //mod lifetime;
 //mod union;
 //mod generics;
-//mod list;
-mod borrow;
+mod list;
+//mod borrow;
