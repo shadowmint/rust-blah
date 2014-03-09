@@ -5,7 +5,9 @@ macro_rules! trace(
 )
 
 #[deriving(Show)] 
-struct Foo;
+struct Foo {
+  value: int
+}
 
 #[deriving(Show)] 
 struct Bar {
@@ -18,9 +20,9 @@ enum BarErr {
 }
 
 impl Bar {
-  fn borrow<'a>(&mut self) -> Result<&~Foo, BarErr> {
+  fn borrow<'a>(&'a mut self) -> Result<&'a ~Foo, BarErr> {
     match self.data {
-      Some(e) => return Ok(&e),
+      Some(ref e) => return Ok(e),
       None => return Err(Nope)
     }
   }
@@ -28,14 +30,17 @@ impl Bar {
 
 #[test]
 fn test_create_indirect() {
-  let mut x = Bar { data: Some(~Foo) };
+  let y = ~Foo { value: 10 };
+  let mut x = Bar { data: Some(y) };
   let mut x2 = Bar { data: None };
   { 
-    let y = x.borrow();
-    trace!("{}", y);
+    match x.borrow() {
+      Ok(ref foo) => trace!("Found {}", foo.value),
+      Err(Nope) => trace!("Bleh")
+    }
   }
   { 
-    let z = x.borrow();
-    trace!("{}", z);
+    let z = x2.borrow();
+    trace!("Z: {}", z);
   }
 }
