@@ -19,14 +19,16 @@ impl<T> Node<T> {
   }
 
   /** Attach a node as the 'next' node in this chain */
-  fn set_next(&mut self, mut node: ~Node<T>) {
-    self._next = Some(node);
+  fn set_next<'a>(&mut self, mut node: ~Node<T>) -> &'a mut ~Node<T> {
+    //let x = &'a mut node;
+    //self._next = Some(node);
+    return & mut node;
   }
 
   /** Get next node */
-  fn next<'a> (&'a mut self) -> Result<&'a ~Node<T>, int> {
+  fn next<'a> (&'a mut self) -> Result<&'a mut ~Node<T>, int> {
     match self._next {
-      Some(ref x) => return Ok(x),
+      Some(ref mut x) => return Ok(x),
       None => return Err(0)
     }
   }
@@ -48,13 +50,12 @@ fn test_create_node_chain() {
   let mut x = Node::new(10);
   let mut y = ~Node::new(11);
   let mut z = ~Node::new(12);
-  x.set_next(y);
-  let mut q = x.next();
-  match(q) {
-    Ok(e) => e.set_next(z),
+  x.set_next(y).set_next(z);
+  /*match x.next() {
+  match x.next() {
+    Ok(mut e) => e.set_next(z),
     Err(_) => trace!("None")
   }
-  /*match x.next() {
     Ok(mut i) => i.set_next(z),
     Err(_) => {}
   }*/
