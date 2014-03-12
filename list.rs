@@ -30,14 +30,14 @@ impl<T> Node<T> {
 
   /** Attach a node as the 'next' node in this chain */
   fn push<'a>(&'a mut self, value: T) -> &'a mut ~Node<T> {
-    if (self._next.is_none()) {
-      self._push_node(~Node::new(value));
-    }
-    else {
-      let tmp = self._next.take().unwrap();
-      let mut next = ~Node::new(value);
-      next._push_node(tmp);
-      self._push_node(next);
+    match self._next {
+      None => self._push_node(~Node::new(value)),
+      Some(_) => {
+        let tmp = self._next.take().unwrap();
+        let mut next = ~Node::new(value);
+        next._push_node(tmp);
+        self._push_node(next);
+      }
     }
     return self._next.as_mut().unwrap();
   }
