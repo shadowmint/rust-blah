@@ -12,6 +12,7 @@ mod _macros;
 //mod lifetime;
 //mod union;
 //mod generics;
+//mod traits_namespace;
 mod list;
 //mod borrow;
 //mod mutable_borrow;

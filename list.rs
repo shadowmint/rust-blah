@@ -2,8 +2,8 @@ use _macros;
 
 #[deriving(Show)] 
 struct Node<T> {
-  _next:Option<~Node<T>>,
-  _data:Option<T>
+  next:Option<~Node<T>>,
+  data:Option<T>
 }
 
 enum NodeErr {
@@ -15,41 +15,43 @@ impl<T> Node<T> {
   /** Create a new Node holding the value T */
   fn new(t:T) -> Node<T> {
     return Node {
-      _next: None,
-      _data: Some(t)
+      next: None,
+      data: Some(t)
     };
   }
 
   /** Create a new blank node */
   fn blank() -> Node<T> {
     return Node {
-      _next: None,
-      _data: None::<T>
+      next: None,
+      data: None::<T>
     };
   }
 
   /** Attach a node as the 'next' node in this chain */
   fn push<'a>(&'a mut self, value: T) -> &'a mut ~Node<T> {
-    match self._next {
+    match self.next.take() {
       None => self._push_node(~Node::new(value)),
-      Some(_) => {
-        let tmp = self._next.take().unwrap();
+      Some(v) => {
         let mut next = ~Node::new(value);
-        next._push_node(tmp);
+        next._push_node(v);
         self._push_node(next);
       }
     }
-    return self._next.as_mut().unwrap();
+    match self.next {
+      Some(ref mut t) => t,
+      None => unreachable!(),
+    }
   }
 
   /** Attach a raw node object as the 'next' node in this chain */
   fn _push_node(& mut self, value: ~Node<T>) {
-    self._next = Some(value);
+    self.next = Some(value);
   }
 
   /** Get the 'next' node of this chain */
   fn next<'a>(&'a mut self) -> Result<&'a mut ~Node<T>, NodeErr> {
-    match self._next.as_mut() {
+    match self.next.as_mut() {
       Some(e) => return Ok(e),
       None => return Err(Nope)
     }
@@ -57,7 +59,7 @@ impl<T> Node<T> {
 
   /** Return data instance */
   fn data<'a>(&'a mut self) -> Result<&'a mut T, NodeErr> {
-    match self._data {
+    match self.data {
       Some(ref mut e) => return Ok(e),
       None => return Err(Nope)
     }
@@ -83,7 +85,6 @@ impl<T> Node<T> {
   fn _applyEach<U>(context:& mut U, r:Result<& mut T, NodeErr>, c:|context:& mut U, value: & mut T|) {
     match r {
       Ok(e) => { 
-        trace!("Walking down node: {:?}", e);
         c(context, e) 
       },
       _ => {}
@@ -102,10 +103,23 @@ impl<T> Node<T> {
   /* Return an immutable filtered set of values */
   fn count_filtered(&mut self, c:|value: & T| -> bool) -> int {
     let mut count = 0;
-    self.each(& mut count, |c:& mut int, _:& mut T| {
-      *c += 1;
+    self.each(& mut count, |count:& mut int, value:& mut T| {
+      if c(value) {
+        *count += 1;
+      }
     });
     return count;
+  }
+
+  /* Return a mutable filtered vector of values */
+  fn filter(&mut self, c:|value: & T| -> bool) -> ~[* mut T] {
+    let mut rtn = ~[];
+    self.each(& mut rtn, |v:& mut ~[* mut T], value:& mut T| {
+      if c(value) {
+        v.push(value as * mut T);
+      }
+    });
+    return rtn;
   }
 }
 
@@ -125,10 +139,21 @@ fn test_create_node_chain() {
 
 #[test]
 fn test_count_filtered_node_chain() {
-  trace!("test_count_filtered_node_chain -->");
   let mut x = ~Node::<int>::blank();
-  for i in range(0, 10) {
-    x.push(i);
+  for i in range(0, 20) { x.push(i); }
+  trace!("test_count_filtered_node_chain: Found a total of {:?} values > 5", x.count_filtered(|v:&int| -> bool { return *v > 5; }));
+  trace!("test_count_filtered_node_chain: Found a total of {:?} values <= 5", x.count_filtered(|v:&int| -> bool { return *v <= 5; }));
+  trace!("test_count_filtered_node_chain: Found a total of {:?} values == 10", x.count_filtered(|v:&int| -> bool { return *v == 10; }));
+}
+
+#[test]
+fn test_filter_node_chain() {
+  let mut x = ~Node::<int>::blank();
+  for i in range(0, 20) { x.push(i); }
+  let output = x.filter(|v:&int| -> bool { return *v >= 5 && *v <= 10; });
+  for i in range(0, output.len()) {
+    unsafe {
+      trace!("test_filter_node_chain: {:?}", *output[i]);
+    }
   }
-  trace!("test_count_filtered_node_chain: Found a total of {:?} values", x.count());
 }
