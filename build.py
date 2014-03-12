@@ -20,7 +20,7 @@ def watch(build_only):
   build.run("main")
 
   target = ruff.target(timeout=10)
-  target.pattern('.*\.rs', base, recurse=True)
+  target.pattern('^[^\.].*\.rs$', base, recurse=True)
 
   ruff.bind(target, build)
   ruff.run(build=build_only)
