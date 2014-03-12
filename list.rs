@@ -29,6 +29,15 @@ impl<T:Clone> Node<T> {
     };
   }
 
+  /** Create a new chain from a vector */
+  fn import(t:~[T]) -> Node<T> {
+    let mut rtn = Node::<T>::blank();
+    for value in t.iter() {
+      rtn.push(value.clone());
+    }
+    return rtn;
+  }
+
   /** Attach a node as the 'next' node in this chain */
   fn push<'a>(&'a mut self, value: T) -> &'a mut ~Node<T> {
     match self.next.take() {
@@ -134,6 +143,12 @@ fn test_create_node() {
 fn test_create_blank_node() {
   let mut x = Node::<int>::blank();
   assert!(x.count() == 0);
+}
+
+#[test]
+fn test_create_from_vector() {
+  let mut x = Node::import(~[1,2,3,4,5,6,7,8,9,0]);
+  assert!(x.count() == 10);
 }
 
 #[test]
