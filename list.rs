@@ -1,4 +1,5 @@
 use _macros;
+use std::cast;
 
 #[deriving(Show)] 
 struct Node<T> {
@@ -10,7 +11,7 @@ enum NodeErr {
   Nope
 }
 
-impl<T> Node<T> {
+impl<T:Clone> Node<T> {
 
   /** Create a new Node holding the value T */
   fn new(t:T) -> Node<T> {
@@ -112,11 +113,11 @@ impl<T> Node<T> {
   }
 
   /* Return a mutable filtered vector of values */
-  fn filter(&mut self, c:|value: & T| -> bool) -> ~[* mut T] {
+  fn filter<'a>(&mut self, c:|value: & T| -> bool) -> ~[T] {
     let mut rtn = ~[];
-    self.each(& mut rtn, |v:& mut ~[* mut T], value:& mut T| {
+    self.each(& mut rtn, |v:& mut ~[T], value:& mut T| {
       if c(value) {
-        v.push(value as * mut T);
+        v.push((*value).clone());
       }
     });
     return rtn;
@@ -125,15 +126,20 @@ impl<T> Node<T> {
 
 #[test]
 fn test_create_node() {
-  let x = Node::new(10);
-  trace!("{}", x);
+  let mut x = Node::new(10);
+  assert!(x.count() == 1);
+}
+
+#[test]
+fn test_create_blank_node() {
+  let mut x = Node::<int>::blank();
+  assert!(x.count() == 0);
 }
 
 #[test]
 fn test_create_node_chain() {
   let mut x = ~Node::<int>::blank();
   x.push(10).push(11).push(12).push(13);
-  trace!("Found a total of {:?} values", x.count());
   assert!(x.count() == 4);
 }
 
@@ -141,9 +147,9 @@ fn test_create_node_chain() {
 fn test_count_filtered_node_chain() {
   let mut x = ~Node::<int>::blank();
   for i in range(0, 20) { x.push(i); }
-  trace!("test_count_filtered_node_chain: Found a total of {:?} values > 5", x.count_filtered(|v:&int| -> bool { return *v > 5; }));
-  trace!("test_count_filtered_node_chain: Found a total of {:?} values <= 5", x.count_filtered(|v:&int| -> bool { return *v <= 5; }));
-  trace!("test_count_filtered_node_chain: Found a total of {:?} values == 10", x.count_filtered(|v:&int| -> bool { return *v == 10; }));
+  assert!(x.count_filtered(|v:&int| -> bool { return *v < 5; }) == 5);
+  assert!(x.count_filtered(|v:&int| -> bool { return *v == 10; }) == 1);
+  assert!(x.count_filtered(|v:&int| -> bool { return *v >= 5 && *v <= 10; }) == 6);
 }
 
 #[test]
@@ -151,9 +157,7 @@ fn test_filter_node_chain() {
   let mut x = ~Node::<int>::blank();
   for i in range(0, 20) { x.push(i); }
   let output = x.filter(|v:&int| -> bool { return *v >= 5 && *v <= 10; });
-  for i in range(0, output.len()) {
-    unsafe {
-      trace!("test_filter_node_chain: {:?}", *output[i]);
-    }
+  for i in range(5, 10) {
+    assert!(output.contains(&i));
   }
 }
