@@ -17,7 +17,7 @@ def watch(build_only):
   # Clean
   build = ruff.build()
   build.run("rustc", "--test", "main.rs")
-  build.run("main")
+  build.run("./main")
 
   target = ruff.target(timeout=10)
   target.pattern('^[^\.].*\.rs$', base, recurse=True)

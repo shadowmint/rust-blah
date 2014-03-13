@@ -9,7 +9,7 @@ mod _macros;
 //mod traits;
 //mod walk;
 //mod output;
-mod lifetime;
+mod lifetime2;
 //mod union;
 //mod generics;
 //mod traits_namespace;
