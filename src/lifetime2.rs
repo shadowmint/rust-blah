@@ -1,3 +1,5 @@
+#[feature(macro_rules)];
+
 macro_rules! trace(
   ($($arg:tt)*) => (
     { let x = ::std::io::stdout().write_line(format_args!(::std::fmt::format, $($arg)*)); println!("{}", x); }
@@ -15,7 +17,7 @@ impl<T> Foo<T> {
   // no reason other than that it allows us to copy the lifetime scope of the 
   // 'marker' variable in the test below, so the lifetime of the returned pointer
   // is valid for that block.
-  fn returns_to_scope_with_marker<'a>(&self, pointless_marker:&'a int) -> &'a ~T {
+  fn returns_to_scope_with_marker<'a>(&'a self, pointless_marker:&'a int) -> &'a ~T {
     return &self.data;
   }
 

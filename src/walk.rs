@@ -22,11 +22,6 @@ fn test_how_path_works() {
 }
 
 #[test]
-fn test_walk_works() {
-  walk(~".");
-}
-
-#[test]
 fn test_walk_fails() {
   walk(~"gafdadsf");
 }
