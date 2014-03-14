@@ -10,6 +10,7 @@ mod traits;
 mod walk;
 mod output;
 mod lifetime2;
+mod lifetime3;
 mod map_test;
 mod union;
 mod generics;
