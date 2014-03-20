@@ -24,6 +24,7 @@ def build(build_only, now_only):
   ebuild = ruff.build()
   ebuild.depend(nbuild)
   ebuild.notice("examples")
+  ebuild.chdir(path_base)
   ebuild.run("rm", "-f", "main")
   ebuild.chdir(path_examples)
   if now_only:
