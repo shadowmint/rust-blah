@@ -14,6 +14,18 @@ impl Default for CItem {
   }
 }
 
+// Helper macro creates things!
+macro_rules! default(
+  ($T:ident, $($k:ident: $v:expr), *) => (
+    $T { $($k: $v), *, ..Default::default() }
+  );
+)
+
+#[test]
+fn test_trace_macro() {
+  trace!("Hello World {} {}", 1, 2);
+}
+
 // NB. See how we use the defaults
 impl CItem {
   fn new(name:~str) -> CItem {
@@ -37,7 +49,7 @@ impl HasFun for CItem {
 
 #[test]
 fn test_can_create_struct() {
-  let mut value = CItem::new(~"Struct Tests");
+  let mut value = default!(CItem, _z: ~"Struct Tests", x: 10);
   value.hello();
   value.hello();
   value.hello();
