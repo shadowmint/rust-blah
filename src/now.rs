@@ -4,4 +4,4 @@ extern crate n;
 extern crate uuid;
 
 mod _macros;
-mod move;
+mod trait_ns;
