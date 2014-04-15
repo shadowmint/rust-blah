@@ -11,6 +11,7 @@ mod trait_ns;
 mod traits_namespace;
 mod walk;
 mod output;
+mod lifetime;
 mod lifetime2;
 mod lifetime3;
 mod map_test;
