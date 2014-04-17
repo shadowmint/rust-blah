@@ -1,7 +1,7 @@
 use _macros;
-use std::cast;
+use std::mem::swap;
 
-#[deriving(Show)] 
+#[deriving(Show)]
 struct Node<T> {
   next:Option<~Node<T>>,
   data:Option<T>
@@ -54,6 +54,14 @@ impl<T:Clone> Node<T> {
     }
   }
 
+  /** Attach a node as the new first node in this chain */
+  fn unshift<'a>(&'a mut self, value: T) -> &'a mut Node<T> {
+    let mut first = ~Node::new(value);
+    swap(self, first);
+    self.next = Some(first);
+    return self;
+  }
+
   /** Attach a raw node object as the 'next' node in this chain */
   fn _push_node(& mut self, value: ~Node<T>) {
     self.next = Some(value);
@@ -94,8 +102,8 @@ impl<T:Clone> Node<T> {
   /** Actually apply an each function to a data point */
   fn _applyEach<U>(context:& mut U, r:Result<& mut T, NodeErr>, c:|context:& mut U, value: & mut T|) {
     match r {
-      Ok(e) => { 
-        c(context, e) 
+      Ok(e) => {
+        c(context, e)
       },
       _ => {}
     }
@@ -129,6 +137,27 @@ impl<T:Clone> Node<T> {
         v.push((*value).clone());
       }
     });
+    return rtn;
+  }
+
+  /* Return the nth entry in the list */
+  fn index<'a>(&'a mut self, index:int) -> Option<~T> {
+    let mut rtn:Option<~T> = None;
+    {
+      let mut count = 0;
+      self.each(& mut count, |count:& mut int, value:& mut T| {
+        let mut found = false;
+        {
+          if *count == index {
+            found = true;
+          }
+          *count += 1;
+        }
+        if found {
+          rtn = Some(~value.clone());
+        }
+      });
+    }
     return rtn;
   }
 }
@@ -175,4 +204,15 @@ fn test_filter_node_chain() {
   for i in range(5, 10) {
     assert!(output.contains(&i));
   }
+}
+
+#[test]
+fn test_unshift() {
+  let mut x = ~Node::<int>::blank();
+  x.push(10).push(11).push(12).push(13);
+  x.unshift(9).unshift(8).unshift(7);
+  assert!(*x.index(0).unwrap() == 7);
+  assert!(*x.index(1).unwrap() == 8);
+  assert!(*x.index(5).unwrap() == 12);
+  assert!(*x.index(6).unwrap() == 13);
 }
