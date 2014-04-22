@@ -1,3 +1,5 @@
+extern crate n;
+
 use _macros;
 use std::mem::swap;
 
@@ -130,9 +132,9 @@ impl<T:Clone> Node<T> {
   }
 
   /* Return a mutable filtered vector of values */
-  fn filter<'a>(&mut self, c:|value: & T| -> bool) -> ~[T] {
-    let mut rtn = ~[];
-    self.each(& mut rtn, |v:& mut ~[T], value:& mut T| {
+  fn filter<'a>(&mut self, c:|value: & T| -> bool) -> Vec<T> {
+    let mut rtn:Vec<T> = Vec::new();
+    self.each(& mut rtn, |v:& mut Vec<T>, value:& mut T| {
       if c(value) {
         v.push((*value).clone());
       }
