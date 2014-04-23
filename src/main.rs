@@ -14,6 +14,7 @@ mod output;
 mod lifetime;
 mod lifetime2;
 mod lifetime3;
+mod intrinsics;
 mod map_test;
 mod union;
 mod generics;

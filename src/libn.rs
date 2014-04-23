@@ -1,4 +1,6 @@
-use n::dothing;
+extern crate n;
+
+use self::n::dothing;
 
 #[test]
 fn test_output() {
