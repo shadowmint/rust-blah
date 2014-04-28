@@ -3,7 +3,7 @@ extern crate libc;
 use self::libc::c_void;
 use std::ops::Drop;
 use std::intrinsics::forget;
-use std::ptr::swap;
+use std::cast::transmute;
 
 struct Foo { x: int }
 
@@ -34,11 +34,8 @@ fn main() {
       let mut res_y = & mut (*res_z);
       println!("Ressurected Y: {:x}", y as uint);
 
-      let mut tmp = ~Foo { x: 10 };
-      let tp = & mut *tmp as * mut Foo;
-      swap(res_y, tp);
-      res_x = tmp;
-      println!("Temp variable should end here");
+      let mut tmp:~Foo = transmute(res_y);
+      println!("The things~");
     }
     println!("Outside space");
   }
