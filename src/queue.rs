@@ -26,13 +26,16 @@ impl QQ {
 
   // Should probably be Result<int, Err> but I'm being lazy.
   fn pop(& mut self) -> int {
-    if (self.head.is_none()) {
+    if self.head.is_none() {
       return -1;
     }
     else {
       let local = self.head.take().unwrap();
       let rtn = local.value;
       self.head = local.next;
+      if self.head.is_none() {
+        self.tail = None;
+      }
       return rtn;
     }
   }
@@ -59,4 +62,7 @@ fn test_pop() {
   assert!(q.pop() == 3);
   assert!(q.pop() == 4);
   assert!(q.pop()== -1);
+
+  q.push(1);
+  assert!(q.pop()== 1);
 }
