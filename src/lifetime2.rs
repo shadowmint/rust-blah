@@ -1,4 +1,4 @@
-#[feature(macro_rules)];
+#![feature(macro_rules)]
 
 macro_rules! trace(
   ($($arg:tt)*) => (
@@ -8,7 +8,7 @@ macro_rules! trace(
 
 #[deriving(Show)]
 struct Foo<T> {
-  data: ~T
+  data: Box<T>
 }
 
 impl<T> Foo<T> {
@@ -17,7 +17,7 @@ impl<T> Foo<T> {
   // no reason other than that it allows us to copy the lifetime scope of the
   // 'marker' variable in the test below, so the lifetime of the returned pointer
   // is valid for that block.
-  fn returns_to_scope_with_marker<'a>(&'a self, pointless_marker:&'a int) -> &'a ~T {
+  fn returns_to_scope_with_marker<'a>(&'a self, pointless_marker:&'a int) -> &'a Box<T> {
     return &self.data;
   }
 
@@ -32,7 +32,7 @@ impl<T> Foo<T> {
 
 #[test]
 fn test_lifetime_return_scope() {
-  let bar = Foo { data: ~Foo { data: ~10 } };
+  let bar = Foo { data: box Foo { data: box 10 } };
   {
     let marker = 10;
     let marked = bar.returns_to_scope_with_marker(&marker);

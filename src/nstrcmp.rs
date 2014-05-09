@@ -12,9 +12,9 @@ macro_rules! nstrcmp(
 
 #[test]
 fn test_nstrcmp() {
-  let x = ~"Hello World";
-  let y = ~"Hello";
-  let z = ~"hello";
+  let x = "Hello World";
+  let y = "Hello";
+  let z = "hello";
   trace!("nstrcmp: {:?}", nstrcmp!(x, y, 5));
   trace!("nstrcmp: {:?}", nstrcmp!(x, y, 10));
   trace!("nstrcmp: {:?}", nstrcmp!(x, y, 3));

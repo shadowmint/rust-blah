@@ -5,7 +5,7 @@ use std::mem::swap;
 
 #[deriving(Show)]
 struct Node<T> {
-  next:Option<~Node<T>>,
+  next:Option<Box<Node<T>>>,
   data:Option<T>
 }
 
@@ -32,7 +32,7 @@ impl<T:Clone> Node<T> {
   }
 
   /** Create a new chain from a vector */
-  fn import(t:~[T]) -> Node<T> {
+  fn import(t:&[T]) -> Node<T> {
     let mut rtn = Node::<T>::blank();
     for value in t.iter() {
       rtn.push(value.clone());
@@ -41,11 +41,11 @@ impl<T:Clone> Node<T> {
   }
 
   /** Attach a node as the 'next' node in this chain */
-  fn push<'a>(&'a mut self, value: T) -> &'a mut ~Node<T> {
+  fn push<'a>(&'a mut self, value: T) -> &'a mut Box<Node<T>> {
     match self.next.take() {
-      None => self._push_node(~Node::new(value)),
+      None => self._push_node(box Node::new(value)),
       Some(v) => {
-        let mut next = ~Node::new(value);
+        let mut next = box Node::new(value);
         next._push_node(v);
         self._push_node(next);
       }
@@ -58,19 +58,19 @@ impl<T:Clone> Node<T> {
 
   /** Attach a node as the new first node in this chain */
   fn unshift<'a>(&'a mut self, value: T) -> &'a mut Node<T> {
-    let mut first = ~Node::new(value);
+    let mut first = box Node::new(value);
     swap(self, first);
     self.next = Some(first);
     return self;
   }
 
   /** Attach a raw node object as the 'next' node in this chain */
-  fn _push_node(& mut self, value: ~Node<T>) {
+  fn _push_node(& mut self, value: Box<Node<T>>) {
     self.next = Some(value);
   }
 
   /** Get the 'next' node of this chain */
-  fn next<'a>(&'a mut self) -> Result<&'a mut ~Node<T>, NodeErr> {
+  fn next<'a>(&'a mut self) -> Result<&'a mut Box<Node<T>>, NodeErr> {
     match self.next.as_mut() {
       Some(e) => return Ok(e),
       None => return Err(Nope)
@@ -143,8 +143,8 @@ impl<T:Clone> Node<T> {
   }
 
   /* Return the nth entry in the list */
-  fn index<'a>(&'a mut self, index:int) -> Option<~T> {
-    let mut rtn:Option<~T> = None;
+  fn index<'a>(&'a mut self, index:int) -> Option<Box<T>> {
+    let mut rtn:Option<Box<T>> = None;
     {
       let mut count = 0;
       self.each(& mut count, |count:& mut int, value:& mut T| {
@@ -156,7 +156,7 @@ impl<T:Clone> Node<T> {
           *count += 1;
         }
         if found {
-          rtn = Some(~value.clone());
+          rtn = Some(box value.clone());
         }
       });
     }
@@ -178,20 +178,20 @@ fn test_create_blank_node() {
 
 #[test]
 fn test_create_from_vector() {
-  let mut x = Node::import(~[1,2,3,4,5,6,7,8,9,0]);
+  let mut x = Node::import(box [1,2,3,4,5,6,7,8,9,0]);
   assert!(x.count() == 10);
 }
 
 #[test]
 fn test_create_node_chain() {
-  let mut x = ~Node::<int>::blank();
+  let mut x = box Node::<int>::blank();
   x.push(10).push(11).push(12).push(13);
   assert!(x.count() == 4);
 }
 
 #[test]
 fn test_count_filtered_node_chain() {
-  let mut x = ~Node::<int>::blank();
+  let mut x = box Node::<int>::blank();
   for i in range(0, 20) { x.push(i); }
   assert!(x.count_filtered(|v:&int| -> bool { return *v < 5; }) == 5);
   assert!(x.count_filtered(|v:&int| -> bool { return *v == 10; }) == 1);
@@ -200,7 +200,7 @@ fn test_count_filtered_node_chain() {
 
 #[test]
 fn test_filter_node_chain() {
-  let mut x = ~Node::<int>::blank();
+  let mut x = box Node::<int>::blank();
   for i in range(0, 20) { x.push(i); }
   let output = x.filter(|v:&int| -> bool { return *v >= 5 && *v <= 10; });
   for i in range(5, 10) {
@@ -210,7 +210,7 @@ fn test_filter_node_chain() {
 
 #[test]
 fn test_unshift() {
-  let mut x = ~Node::<int>::blank();
+  let mut x = box Node::<int>::blank();
   x.push(10).push(11).push(12).push(13);
   x.unshift(9).unshift(8).unshift(7);
   assert!(*x.index(0).unwrap() == 7);

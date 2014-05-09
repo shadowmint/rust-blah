@@ -16,7 +16,7 @@ impl Iterator<(* mut Foo, int)> for Foo {
 }
 
 struct Bar {
-  foo: ~Foo
+  foo: Box<Foo>
 }
 
 impl Iterator<(* mut Foo, int)> for Bar {
@@ -26,7 +26,7 @@ impl Iterator<(* mut Foo, int)> for Bar {
 }
 
 fn main() {
-  let mut x = Bar { foo: ~Foo { offset: 8, x: [1, 2, 3, 4, 5, 6, 7, 8] } };
+  let mut x = Bar { foo: box Foo { offset: 8, x: [1, 2, 3, 4, 5, 6, 7, 8] } };
   println!("Start");
   for (y, z) in x {
     let q:& mut Foo;

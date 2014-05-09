@@ -5,4 +5,4 @@ extern crate uuid;
 extern crate collections;
 
 mod _macros;
-mod queue;
+mod char_star_star;

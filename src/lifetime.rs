@@ -36,16 +36,16 @@ impl Drop for BlahLF {
 
 #[test]
 fn test_lifetime_scope() {
-  let mut x:~BlahLF = ~BlahLF::new();
+  let mut x:Box<BlahLF> = box BlahLF::new();
   let y = x.state();
-  let z = ~BlahLF::new();
+  let z = box BlahLF::new();
   
   // NB. We can't do this because x has a borrowed state
   // x = ~BlahLF::new();
 }
 
 struct HasValues {
-  values: ~[int]
+  values: Vec<int>
 }
 
 fn borrow_values<'a>(x:&'a HasValues) -> Vec<&'a int> {
@@ -58,7 +58,7 @@ fn borrow_values<'a>(x:&'a HasValues) -> Vec<&'a int> {
 
 #[test]
 fn test_lifetime_scope_again() {
-  let mut q = HasValues { values: ~[1, 2, 3, 4, 5] };
+  let mut q = HasValues { values: box [1, 2, 3, 4, 5] };
   let mut p = borrow_values(&q);
   trace!("Output of lifetime test: {:?}", p);
 }
@@ -75,7 +75,7 @@ fn borrow_values_that_match<'a>(x:&'a HasValues, filter:|f:&int| -> bool) -> Vec
 
 #[test]
 fn test_lifetime_scope_with_filter() {
-  let mut q = HasValues { values: ~[1, 2, 3, 4, 5] };
+  let mut q = HasValues { values: box [1, 2, 3, 4, 5] };
   let mut p = borrow_values_that_match(&q, |f:&int| -> bool { return *f > 2; });
   trace!("Output of lifetime test: {:?}", p);
 }

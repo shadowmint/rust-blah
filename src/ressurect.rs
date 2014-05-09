@@ -14,7 +14,7 @@ impl Drop for Foo {
 }
 
 fn main() {
-  let mut x = ~Foo { x: 10 };
+  let mut x = box Foo { x: 10 };
 
   let mut y = & mut *x as * mut Foo;
   println!("Address Y: {:x}", y as uint);
@@ -26,7 +26,7 @@ fn main() {
   unsafe { forget(x); }
 
   {
-    let res_x:~Foo;
+    let res_x:Box<Foo>;
     unsafe {
       let mut res_z = z as * mut Foo;
       println!("Ressurected Z: {:x}", z as uint);
@@ -34,7 +34,7 @@ fn main() {
       let mut res_y = & mut (*res_z);
       println!("Ressurected Y: {:x}", y as uint);
 
-      let mut tmp:~Foo = transmute(res_y);
+      let mut tmp:Box<Foo> = transmute(res_y);
       println!("The things~");
     }
     println!("Outside space");

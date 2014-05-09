@@ -1,25 +1,25 @@
 struct Node {
   value:int,
-  next:Option<~Node>
+  next:Option<Box<Node>>
 }
 
 struct QQ {
-  head: Option<~Node>,
-  tail: Option<* mut ~Node>
+  head: Option<Box<Node>>,
+  tail: Option<* mut Box<Node>>
 }
 
 impl QQ {
   fn push(& mut self, x:int) {
     match self.tail {
       Some(tp) => {
-        let mut tail:& mut ~Node; 
+        let mut tail:& mut Box<Node>; 
         unsafe { tail = & mut (*tp); }
-        tail.next = Some(~Node{ value: x, next: None });
-        self.tail = Some(tail.next.get_mut_ref() as * mut ~Node);
+        tail.next = Some(box Node{ value: x, next: None });
+        self.tail = Some(tail.next.get_mut_ref() as * mut Box<Node>);
       },
       None => {
-        self.head = Some(~Node{ value: x, next: None });
-        self.tail = Some(self.head.get_mut_ref() as * mut ~Node);
+        self.head = Some(box Node{ value: x, next: None });
+        self.tail = Some(self.head.get_mut_ref() as * mut Box<Node>);
       }
     }
   }

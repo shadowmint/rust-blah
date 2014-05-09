@@ -10,7 +10,7 @@ struct CItem {
 // Special default trait for default values
 impl Default for CItem {
   fn default() -> CItem {
-    return CItem { x: -1, y: 0, _z: ~"None" };
+    return CItem { x: -1, y: 0, _z: "None" };
   }
 }
 
@@ -28,7 +28,7 @@ fn test_trace_macro() {
 
 // NB. See how we use the defaults
 impl CItem {
-  fn new(name:~str) -> CItem {
+  fn new(name:&'static str) -> CItem {
     let rtn = CItem { _z: name, ..Default::default() };
     return rtn;
   }
@@ -49,7 +49,7 @@ impl HasFun for CItem {
 
 #[test]
 fn test_can_create_struct() {
-  let mut value = default!(CItem, _z: ~"Struct Tests", x: 10);
+  let mut value = default!(CItem, _z: "Struct Tests", x: 10);
   value.hello();
   value.hello();
   value.hello();

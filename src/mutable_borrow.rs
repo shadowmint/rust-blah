@@ -22,7 +22,7 @@ impl Foo {
 
 #[deriving(Show)] 
 struct Bar {
-  data: Option<~Foo>
+  data: Option<Box<Foo>>
 }
 
 #[deriving(Show)] 
@@ -31,7 +31,7 @@ enum BarErr {
 }
 
 impl Bar {
-  fn borrow<'a>(&'a mut self) -> Result<&'a mut ~Foo, BarErr> {
+  fn borrow<'a>(&'a mut self) -> Result<&'a mut Box<Foo>, BarErr> {
     match self.data {
       Some(ref mut e) => return Ok(e),
       None => return Err(Nope)
@@ -42,7 +42,7 @@ impl Bar {
     return self;
   }
 
-  fn return_foo<'a>(&'a mut self) -> Result<&'a mut ~Foo, BarErr> {
+  fn return_foo<'a>(&'a mut self) -> Result<&'a mut Box<Foo>, BarErr> {
     match self.data {
       Some(ref mut x) => return Ok(x),
       None => return Err(Nope)
@@ -56,7 +56,7 @@ impl Bar {
 
 #[test]
 fn test_recurse_foo() {
-  let y = ~Foo { value: 10 };
+  let y = box Foo { value: 10 };
   let mut x = Bar { data: Some(y) };
   match x.return_self().return_self().return_foo() {
     Ok(foo) => foo.checker(),
@@ -66,14 +66,14 @@ fn test_recurse_foo() {
 
 #[test]
 fn test_recurse_self() {
-  let y = ~Foo { value: 10 };
+  let y = box Foo { value: 10 };
   let mut x = Bar { data: Some(y) };
   x.return_self().return_self().return_self().checker();
 }
 
 #[test]
 fn test_create_indirect() {
-  let y = ~Foo { value: 10 };
+  let y = box Foo { value: 10 };
   let mut x = Bar { data: Some(y) };
   let mut x2 = Bar { data: None };
   { 

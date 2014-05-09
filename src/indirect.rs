@@ -20,7 +20,7 @@ impl<T> Indirect<T> {
 
 #[test]
 fn test_create_indirect() {
-  let mut x = Indirect::new(~10);
+  let mut x = Indirect::new(box 10);
   unsafe {
     let y = x.get();
     let z = x.get();

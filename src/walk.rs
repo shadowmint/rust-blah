@@ -1,8 +1,8 @@
 use std::io::fs;
 use _macros;
 
-pub fn walk(path:~str) {
-  let path = ~Path::new(path);
+pub fn walk(path:&'static str) {
+  let path = box Path::new(path);
   let walker = fs::walk_dir(path);
   if walker.is_ok() {
     for value in walker.ok().unwrap() {
@@ -16,12 +16,12 @@ pub fn walk(path:~str) {
 
 #[test]
 fn test_how_path_works() {
-  let path = ~Path::new(~"xxx");
+  let path = box Path::new("xxx");
   let p2 = path.join("things").join("blah").join("dsfdsf");
   trace!("{}", p2.display());
 }
 
 #[test]
 fn test_walk_fails() {
-  walk(~"gafdadsf");
+  walk("gafdadsf");
 }

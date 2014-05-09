@@ -1,4 +1,4 @@
-#[feature(macro_rules)];
+#![feature(macro_rules)]
 
 macro_rules! trace(
   ($($arg:tt)*) => (

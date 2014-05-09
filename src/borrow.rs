@@ -11,7 +11,7 @@ struct Foo {
 
 #[deriving(Show)] 
 struct Bar {
-  data: Option<~Foo>
+  data: Option<Box<Foo>>
 }
 
 #[deriving(Show)] 
@@ -20,7 +20,7 @@ enum BarErr {
 }
 
 impl Bar {
-  fn borrow<'a>(&'a mut self) -> Result<&'a ~Foo, BarErr> {
+  fn borrow<'a>(&'a mut self) -> Result<&'a Box<Foo>, BarErr> {
     match self.data {
       Some(ref e) => return Ok(e),
       None => return Err(Nope)
@@ -30,7 +30,7 @@ impl Bar {
 
 #[test]
 fn test_create_indirect() {
-  let y = ~Foo { value: 10 };
+  let y = box Foo { value: 10 };
   let mut x = Bar { data: Some(y) };
   let mut x2 = Bar { data: None };
   { 
