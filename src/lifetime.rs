@@ -51,14 +51,19 @@ struct HasValues {
 fn borrow_values<'a>(x:&'a HasValues) -> Vec<&'a int> {
   let mut rtn:Vec<&'a int> = Vec::new();
   for i in range(0, x.values.len()) {
-    rtn.push(&x.values[i]);
+    rtn.push(x.values.get(i));
   }
   return rtn;
 }
 
 #[test]
 fn test_lifetime_scope_again() {
-  let mut q = HasValues { values: box [1, 2, 3, 4, 5] };
+  let mut q = HasValues { values: Vec::<int>::new() };
+  q.values.push(1);
+  q.values.push(2);
+  q.values.push(3);
+  q.values.push(4);
+  q.values.push(5);
   let mut p = borrow_values(&q);
   trace!("Output of lifetime test: {:?}", p);
 }
@@ -66,8 +71,8 @@ fn test_lifetime_scope_again() {
 fn borrow_values_that_match<'a>(x:&'a HasValues, filter:|f:&int| -> bool) -> Vec<&'a int> {
   let mut rtn:Vec<&'a int> = Vec::new();
   for i in range(0, x.values.len()) {
-    if filter(&x.values[i]) {
-      rtn.push(&x.values[i]);
+    if filter(x.values.get(i)) {
+      rtn.push(x.values.get(i));
     }
   }
   return rtn;
@@ -75,7 +80,7 @@ fn borrow_values_that_match<'a>(x:&'a HasValues, filter:|f:&int| -> bool) -> Vec
 
 #[test]
 fn test_lifetime_scope_with_filter() {
-  let mut q = HasValues { values: box [1, 2, 3, 4, 5] };
+  let mut q = HasValues { values: Vec::<int>::from_slice([1, 2, 3, 4, 5]) };
   let mut p = borrow_values_that_match(&q, |f:&int| -> bool { return *f > 2; });
   trace!("Output of lifetime test: {:?}", p);
 }

@@ -4,7 +4,7 @@ use _macros;
 struct CItem {
   x: int,
   y: int,
-  _z: ~str
+  _z: &'static str
 }
 
 // Special default trait for default values

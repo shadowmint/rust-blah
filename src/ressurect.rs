@@ -3,7 +3,7 @@ extern crate libc;
 use self::libc::c_void;
 use std::ops::Drop;
 use std::intrinsics::forget;
-use std::cast::transmute;
+use std::mem::transmute;
 
 struct Foo { x: int }
 

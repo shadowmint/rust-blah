@@ -11,7 +11,6 @@ mod generics;
 mod imported;
 mod imports;
 mod indirect;
-mod infer_type;
 mod intrinsics;
 mod libn;
 mod lifetime;
