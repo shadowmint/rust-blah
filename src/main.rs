@@ -33,3 +33,5 @@ mod iterators;
 mod ressurect;
 mod overload;
 mod queue;
+mod resource;
+mod var_args;
