@@ -58,9 +58,9 @@ impl<T:Clone> Node<T> {
 
   /** Attach a node as the new first node in this chain */
   fn unshift<'a>(&'a mut self, value: T) -> &'a mut Node<T> {
-    let mut first = box Node::new(value);
-    swap(self, first);
-    self.next = Some(first);
+    let mut first:Node<T> = Node::new(value);
+    swap(self, & mut first);
+    self.next = Some(box first);
     return self;
   }
 
@@ -166,7 +166,7 @@ impl<T:Clone> Node<T> {
 
 #[test]
 fn test_create_node() {
-  let mut x = Node::new(10);
+  let mut x = Node::new(10i);
   assert!(x.count() == 1);
 }
 

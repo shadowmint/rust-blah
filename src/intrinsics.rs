@@ -9,13 +9,13 @@ use _macros;
 #[deriving(Show)]
 struct Foo {
   x: int,
-  y: *int
+  y: * mut int
 }
 
 #[test]
 fn test_intrinsic_memory_block() {
-  let x = 0;
-  let mut p = Foo { x: 10, y: &x as *int};
+  let mut x = 0i;
+  let mut p = Foo { x: 10i, y: & mut x as * mut int};
   let mut q:* mut Foo;
   unsafe {
     trace!("Block size: {}", size_of::<Foo>());
@@ -37,7 +37,7 @@ fn test_intrinsic_memory_block() {
     trace!("scope1");
     (*q).x = 100;
     trace!("scope3");
-    (*q).y = &x as *int;
+    (*q).y = & mut x as * mut int;
     trace!("Hii... {}", *q);
     trace!("scope2");
   }
@@ -49,8 +49,4 @@ fn test_intrinsic_memory_block() {
     trace!("free: {}", data as u64);
     free(data);
   }
-}
-
-#[test]
-fn test_forget() {
 }

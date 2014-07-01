@@ -15,7 +15,7 @@ impl<'a, T> Foo<'a, T> {
 
 #[test]
 fn test_scope() {
-  let bar = Foo { data: &Foo { data: &10 } };
+  let bar = Foo { data: &Foo { data: &10i } };
   let marked;
   {
     marked = bar.returns_to_scope();

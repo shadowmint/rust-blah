@@ -13,14 +13,14 @@ impl<T> Indirect<T> {
   }
 
   // Open a mutable reference to T
-  fn get<'a>(&'a mut self) -> *T {
-    return &self._data as *T;
+  fn get<'a>(&'a mut self) -> *const T {
+    return &self._data as *const T;
   }
 }
 
 #[test]
 fn test_create_indirect() {
-  let mut x = Indirect::new(box 10);
+  let mut x = Indirect::new(box 10u);
   unsafe {
     let y = x.get();
     let z = x.get();

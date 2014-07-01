@@ -18,7 +18,7 @@ fn test_create_generic_new() {
 
 #[test]
 fn test_create_generic_instance() {
-  let x = Gen { data: Some(0) };
+  let x = Gen { data: Some(0i) };
   if (!x.data.is_none()) {
     trace!("Hello With int value: {}", x);
   }

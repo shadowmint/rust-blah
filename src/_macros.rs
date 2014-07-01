@@ -14,5 +14,5 @@ macro_rules! trace(
 
 #[test]
 fn test_trace_macro() {
-  trace!("Hello World {} {}", 1, 2);
+  trace!("Hello World {} {}", 1i, 2i);
 }

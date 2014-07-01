@@ -26,11 +26,11 @@ impl<T> Foo<T> {
 
 #[test]
 fn test_lifetime_return_scope() {
-  let bar = Foo { data: box Foo { data: box 10 } };
+  let bar = Foo { data: box Foo { data: box 10i } };
   {
-    let marker = 10;
+    let marker = 10i;
     let marked = bar.returns_to_scope_with_marker(&marker);
-    trace!("{:?}", marked);
+    trace!("{}", marked);
   }
 }
 

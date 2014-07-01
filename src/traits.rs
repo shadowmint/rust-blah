@@ -23,7 +23,7 @@ macro_rules! default(
 
 #[test]
 fn test_trace_macro() {
-  trace!("Hello World {} {}", 1, 2);
+  trace!("Hello World {} {}", 1i, 2i);
 }
 
 // NB. See how we use the defaults
