@@ -5,4 +5,4 @@ extern crate uuid;
 extern crate collections;
 
 mod _macros;
-mod map_test;
+mod var_args;
