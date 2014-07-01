@@ -32,7 +32,7 @@ impl<T:Clone> Node<T> {
   }
 
   /** Create a new chain from a vector */
-  fn import(t:&[T]) -> Node<T> {
+  fn import(t:Vec<T>) -> Node<T> {
     let mut rtn = Node::<T>::blank();
     for value in t.iter() {
       rtn.push(value.clone());
@@ -178,7 +178,9 @@ fn test_create_blank_node() {
 
 #[test]
 fn test_create_from_vector() {
-  let mut x = Node::import(box [1,2,3,4,5,6,7,8,9,0]);
+  let mut value = Vec::<int>::new();
+  for x in range(0, 10) { value.push(x); }
+  let mut x = Node::import(value);
   assert!(x.count() == 10);
 }
 

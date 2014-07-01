@@ -13,7 +13,7 @@ impl Drop for Foo {
   }
 }
 
-fn main() {
+fn test_foo() {
   let mut x = box Foo { x: 10 };
 
   let mut y = & mut *x as * mut Foo;

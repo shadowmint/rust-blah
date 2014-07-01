@@ -1,6 +1,6 @@
 use _macros;
 
-#[deriving(Eq, Show)] 
+#[deriving(Show)] 
 enum MyErr {
   None,
   FailOne,

@@ -15,7 +15,7 @@ def build(build_only, now_only):
   nbuild = ruff.build()
   nbuild.notice("libn")
   nbuild.chdir(path_n)
-  nbuild.run("rustc", "--crate-type=lib", "n.rs", "--out-dir", "..")
+  nbuild.run("rustc", "--crate-type=lib", "src/n.rs", "--out-dir", "..")
 
   ntarget = ruff.target(timeout=10)
   ntarget.pattern('.*\.rs$', path_n, recurse=True)

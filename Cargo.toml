@@ -1,0 +1,10 @@
+[package]
+name = "examples"
+version = "0.1.0"
+authors = [ "linderd@iinet.net.au" ]
+
+[[bin]]
+name = "main"
+
+[dependencies.n]
+path = "./libs/rust-n"

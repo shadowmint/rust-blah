@@ -24,7 +24,7 @@ impl BlahLF {
 
 impl fmt::Show for BlahLF {
   fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-    return write!(f.buf, "<BlahLF:: {}>", self.id);
+    return f.write("<BlahLF:: ".as_slice().as_bytes());
   }
 }
 

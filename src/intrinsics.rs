@@ -4,12 +4,7 @@ use std::intrinsics::size_of;
 use self::libc::malloc;
 use self::libc::free;
 use self::libc::c_void;
-
-macro_rules! trace(
-  ($($arg:tt)*) => (
-    { let _ = ::std::io::stdout().write_line(format_args!(::std::fmt::format, $($arg)*)); }
-  );
-)
+use _macros;
 
 #[deriving(Show)]
 struct Foo {
@@ -56,6 +51,6 @@ fn test_intrinsic_memory_block() {
   }
 }
 
-#[test] 
+#[test]
 fn test_forget() {
 }

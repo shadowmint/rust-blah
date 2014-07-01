@@ -1,10 +1,4 @@
-#![feature(macro_rules)]
-
-macro_rules! trace(
-  ($($arg:tt)*) => (
-    { let x = ::std::io::stdout().write_line(format_args!(::std::fmt::format, $($arg)*)); println!("{}", x); }
-  );
-)
+use _macros;
 
 #[deriving(Show)]
 struct Foo<'a, T> {

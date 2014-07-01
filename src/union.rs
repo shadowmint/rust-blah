@@ -1,22 +1,18 @@
-macro_rules! trace(
-  ($($arg:tt)*) => (
-    { ::std::io::stdout().write_line(format_args!(::std::fmt::format, $($arg)*)); }
-  );
-)
+use _macros;
 
-#[deriving(Eq, Show)]
+#[deriving(PartialEq, Show)]
 struct EventOne {
   x: f64,
   y: f64
 }
 
-#[deriving(Eq, Show)]
+#[deriving(PartialEq, Show)]
 struct EventTwo {
   x: int,
   y: int
 }
 
-#[deriving(Eq, Show)]
+#[deriving(PartialEq, Show)]
 enum ComplexEvent {
   A(EventOne, &'static str),
   B(EventTwo, &'static str)

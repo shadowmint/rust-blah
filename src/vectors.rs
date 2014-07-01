@@ -1,8 +1,4 @@
-macro_rules! trace(
-  ($($arg:tt)*) => (
-    { ::std::io::stdout().write_line(format_args!(::std::fmt::format, $($arg)*)); }
-  );
-)
+use _macros;
 
 #[test]
 fn test_vectors() {

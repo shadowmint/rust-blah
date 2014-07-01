@@ -1,6 +1,7 @@
 #![feature(macro_rules)]
 
 extern crate uuid;
+extern crate debug;
 
 mod _macros;
 mod borrow;
@@ -12,6 +13,7 @@ mod imported;
 mod imports;
 mod indirect;
 mod intrinsics;
+mod iterators;
 mod libn;
 mod lifetime;
 mod lifetime2;
@@ -22,6 +24,9 @@ mod move;
 mod mutable_borrow;
 mod nstrcmp;
 mod output;
+mod overload;
+mod queue;
+mod ressurect;
 mod trait_ns;
 mod traits;
 mod traits_namespace;
@@ -29,7 +34,6 @@ mod tuples;
 mod union;
 mod vectors;
 mod walk;
-mod iterators;
-mod ressurect;
-mod overload;
-mod queue;
+
+fn main() {
+}

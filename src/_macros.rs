@@ -3,7 +3,12 @@
 #[macro_export]
 macro_rules! trace(
   ($($arg:tt)*) => (
-    { let x = ::std::io::stdout().write_line(format_args!(::std::fmt::format, $($arg)*)); println!("{}", x); }
+    { 
+      let tmp = format_args!(::std::fmt::format, $($arg)*);
+      let value:&str = tmp.as_slice();
+      let x = ::std::io::stdout().write_line(value);
+      println!("{}", x); 
+    }
   );
 )
 
