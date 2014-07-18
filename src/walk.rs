@@ -2,8 +2,8 @@ use std::io::fs;
 use _macros;
 
 pub fn walk(path:&'static str) {
-  let path = box Path::new(path);
-  let walker = fs::walk_dir(path);
+  let path = Path::new(path);
+  let walker = fs::walk_dir(&path);
   if walker.is_ok() {
     for value in walker.ok().unwrap() {
       trace!("walk: {}", value.display());

@@ -34,6 +34,7 @@ mod tuples;
 mod union;
 mod vectors;
 mod walk;
+mod grapheme;
 
 fn main() {
 }
