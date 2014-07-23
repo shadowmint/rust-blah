@@ -36,7 +36,7 @@ fn test_lifetime_return_scope() {
 
 static mut VALUE:int = 10;
 
-unsafe fn returns_value() -> &int {
+unsafe fn returns_value() -> &'static int {
   return &VALUE;
 }
 
