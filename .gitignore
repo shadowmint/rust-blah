@@ -1,3 +1,4 @@
 *.rlib
 main
 target/*
+Cargo.lock

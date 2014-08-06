@@ -5,3 +5,6 @@ authors = [ "linderd@iinet.net.au" ]
 
 [[bin]]
 name = "main"
+
+[[bin]]
+name = "now"

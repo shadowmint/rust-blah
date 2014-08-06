@@ -35,6 +35,7 @@ mod vectors;
 mod walk;
 mod grapheme;
 mod overload_function_with_generic;
+mod vec2d;
 
 fn main() {
 }
