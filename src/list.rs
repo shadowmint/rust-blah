@@ -1,5 +1,3 @@
-extern crate n;
-
 use _macros;
 use std::mem::swap;
 

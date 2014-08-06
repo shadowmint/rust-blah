@@ -5,6 +5,3 @@ authors = [ "linderd@iinet.net.au" ]
 
 [[bin]]
 name = "main"
-
-[dependencies.n]
-path = "./libs/rust-n"
