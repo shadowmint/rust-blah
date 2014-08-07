@@ -36,6 +36,7 @@ mod walk;
 mod grapheme;
 mod overload_function_with_generic;
 mod vec2d;
+mod search;
 
 fn main() {
 }
