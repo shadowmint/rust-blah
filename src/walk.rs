@@ -1,9 +1,11 @@
 extern crate time;
+extern crate glob;
 
 use std::io::fs;
 use std::io::{TypeDirectory, TypeFile};
 use self::time::Timespec;
 use self::time::{at, strftime};
+use self::glob::glob;
 use _macros;
 
 pub fn walk(path:&'static str) {
@@ -16,25 +18,25 @@ pub fn walk(path:&'static str) {
       match stats {
         Ok(stats) => {
             if stats.kind == TypeDirectory {
-              trace!("- Directory!");
+              println!("- Directory!");
             }
             else if stats.kind == TypeFile {
-              trace!("- File!");
-              trace!("- Last mod: {}", stats.modified);
+              println!("- File!");
+              println!("- Last mod: {}", stats.modified);
               let spec = Timespec::new((stats.modified / 1000) as i64, 0);
               let now = time::at(spec);
-              trace!("-- As tm: {}", strftime("%F - %H:%M:%S", &now));
+              println!("-- As tm: {}", strftime("%F - %H:%M:%S", &now));
             }
         },
         _ => {
-          trace!("Stat failed");
+          println!("Stat failed");
         }
       }
-      trace!("walk: {}", value.display());
+      println!("walk: {}", value.display());
     }
   }
   else {
-      trace!("walk: Invalid target: {}", path.display());
+      println!("walk: Invalid target: {}", path.display());
   }
 }
 
@@ -42,7 +44,7 @@ pub fn walk(path:&'static str) {
 fn test_how_path_works() {
   let path = box Path::new("xxx");
   let p2 = path.join("things").join("blah").join("dsfdsf");
-  trace!("{}", p2.display());
+  println!("{}", p2.display());
 }
 
 #[test]
@@ -53,4 +55,11 @@ fn test_walk_fails() {
 #[test]
 fn test_walk_works() {
   walk(".");
+}
+
+#[test]
+fn test_glob() {
+  for path in glob("*") {
+    trace!("Glob: {}", path.as_str());
+  }
 }
