@@ -1,7 +1,6 @@
 use std::mem::transmute;
 
 struct Handle {
-  valid: bool,
   r: *Resource
 }
 
@@ -34,7 +33,7 @@ impl ResourceManager {
   }
   fn handle(& mut self, id: uint) -> Handle {
     let item:*Resource = self.items.get(id); 
-    return Handle { valid: true, r: item };
+    return Handle { r: item };
   }
 }
 
