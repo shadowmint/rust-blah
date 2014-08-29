@@ -1,5 +1,5 @@
 use std::str::is_utf8;
-use std::raw::Slice;
+use std::raw::Slice as Slice_;
 use std::mem::transmute;
 
 #[test]
@@ -12,11 +12,11 @@ fn test_seek() {
 
 fn find_utf_boundary(value:&[u8]) -> int {
   unsafe {
-    let tmp:Slice<u8> = transmute(value);
+    let tmp:Slice_<u8> = transmute(value);
     let mut maybe_invalid = 0i;
     let mut marker = 0i;
     for i in range(0, tmp.len) {
-      let view:Slice<u8> = Slice { data:tmp.data, len: i };
+      let view:Slice_<u8> = Slice_ { data:tmp.data, len: i };
       let view_as_bytes:&[u8] = transmute(view);
       if !is_utf8(view_as_bytes) {
         if maybe_invalid == 0 {

@@ -27,7 +27,6 @@ impl bar::Foo for Item {
 }
 
 mod p1 {
-  use super::foo::Foo; // Clobbered by next use
   use super::bar::Foo;
   use super::Item;
 
@@ -39,7 +38,6 @@ mod p1 {
 }
 
 mod p2 {
-  use super::bar::Foo; // Clobbered by next use
   use super::foo::Foo;
   use super::Item;
 
