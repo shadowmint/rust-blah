@@ -38,6 +38,7 @@ mod overload_function_with_generic;
 mod vec2d;
 mod search;
 mod hash_test;
+mod sized;
 
 fn main() {
 }

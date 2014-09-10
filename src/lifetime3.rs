@@ -1,7 +1,7 @@
 use _macros;
 
 #[deriving(Show)]
-struct Foo<'a, T> {
+struct Foo<'a, T:'a> {
   data: &'a T
 }
 
