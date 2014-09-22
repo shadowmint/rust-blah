@@ -39,6 +39,7 @@ mod vec2d;
 mod search;
 mod hash_test;
 mod sized;
+mod sized2;
 
 fn main() {
 }
