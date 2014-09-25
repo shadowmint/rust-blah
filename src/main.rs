@@ -40,6 +40,7 @@ mod search;
 mod hash_test;
 mod sized;
 mod sized2;
+mod find_in_array;
 
 fn main() {
 }
