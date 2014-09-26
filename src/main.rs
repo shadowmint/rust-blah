@@ -41,6 +41,7 @@ mod hash_test;
 mod sized;
 mod sized2;
 mod find_in_array;
+mod function_pointers;
 
 fn main() {
 }
