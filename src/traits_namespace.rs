@@ -18,6 +18,6 @@ impl CTItem for CItem {
 #[test]
 fn test_can_create_struct() {
   let mut value = CItem { x: 10 };
-  trace!("?? {:?}", value.x);
-  trace!("?? {:?}", value.x());
+  trace!("?? {}", value.x);
+  trace!("?? {}", value.x());
 }

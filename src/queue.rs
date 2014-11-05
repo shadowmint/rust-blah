@@ -12,14 +12,14 @@ impl QQ {
   fn push(& mut self, x:int) {
     match self.tail {
       Some(tp) => {
-        let mut tail:& mut Box<Node>; 
+        let mut tail:& mut Box<Node>;
         unsafe { tail = & mut (*tp); }
         tail.next = Some(box Node{ value: x, next: None });
-        self.tail = Some(tail.next.get_mut_ref() as * mut Box<Node>);
+        self.tail = Some(tail.next.as_mut().unwrap() as * mut Box<Node>);
       },
       None => {
         self.head = Some(box Node{ value: x, next: None });
-        self.tail = Some(self.head.get_mut_ref() as * mut Box<Node>);
+        self.tail = Some(self.head.as_mut().unwrap() as * mut Box<Node>);
       }
     }
   }
@@ -41,7 +41,7 @@ impl QQ {
   }
 }
 
-#[test] 
+#[test]
 fn test_push() {
   let mut q = QQ { head: None, tail: None };
   q.push(1);
@@ -50,7 +50,7 @@ fn test_push() {
   q.push(4);
 }
 
-#[test] 
+#[test]
 fn test_pop() {
   let mut q = QQ { head: None, tail: None };
   q.push(1);

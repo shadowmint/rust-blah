@@ -8,3 +8,9 @@ name = "main"
 
 [[bin]]
 name = "now"
+
+[dependencies.uuid]
+git = "https://github.com/rust-lang/uuid.git"
+
+[dependencies.glob]
+git = "https://github.com/rust-lang/glob.git"

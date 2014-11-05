@@ -45,8 +45,8 @@ fn test_return_a_pointer() {
   let x:&int;
   {
     unsafe { x = returns_value(); }
-    trace!("Hi: {:?}", x);
+    trace!("Hi: {}", x);
   }
   let y = x;
-  trace!("Hi2: {:?}", y);
+  trace!("Hi2: {}", y);
 }

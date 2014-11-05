@@ -21,5 +21,5 @@ impl imported::Imported for Hi {
 #[test]
 fn test_thing() {
   let value = Hi;
-  trace!("{:?}", value.hello(10));
+  trace!("{}", value.hello(10));
 }

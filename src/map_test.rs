@@ -17,7 +17,7 @@ fn test_map_to_new_values() {
 fn test_map_replacing_values() {
   let mut x = Vec::<int>::new();
   for i in range(0, 4) { x.push(i); }
-  let z = x.mut_iter().map(|y| {
+  let z = x.iter().map(|y:&int| {
     return *y + 1;
   });
 }

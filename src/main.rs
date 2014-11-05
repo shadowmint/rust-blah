@@ -1,7 +1,7 @@
 #![feature(macro_rules)]
 
 extern crate uuid;
-extern crate debug;
+extern crate glob;
 
 mod _macros;
 mod borrow;
@@ -19,7 +19,7 @@ mod lifetime2;
 mod lifetime3;
 mod list;
 mod map_test;
-mod move;
+mod move_;
 mod mutable_borrow;
 mod nstrcmp;
 mod output;

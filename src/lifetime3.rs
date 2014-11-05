@@ -19,7 +19,7 @@ fn test_scope() {
   let marked;
   {
     marked = bar.returns_to_scope();
-    trace!("First: {:?}", marked);
+    trace!("First: {}", marked);
   }
-  trace!("Second: {:?}", marked);
+  trace!("Second: {}", marked);
 }

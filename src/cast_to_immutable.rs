@@ -9,5 +9,5 @@ fn test_cast_to_immutable() {
    let x = 10i;
    let y = &10i;
    let z = doit(y);
-   trace!("{:?}", z);
+   trace!("{}", z);
 }

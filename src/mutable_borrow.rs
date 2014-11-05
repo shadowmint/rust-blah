@@ -1,4 +1,4 @@
-#[deriving(Show)] 
+#[deriving(Show)]
 struct Foo {
   value: int
 }
@@ -14,12 +14,12 @@ impl Foo {
   }
 }
 
-#[deriving(Show)] 
+#[deriving(Show)]
 struct Bar {
   data: Option<Box<Foo>>
 }
 
-#[deriving(Show)] 
+#[deriving(Show)]
 enum BarErr {
   Nope
 }
@@ -70,14 +70,14 @@ fn test_create_indirect() {
   let y = box Foo { value: 10 };
   let mut x = Bar { data: Some(y) };
   let mut x2 = Bar { data: None };
-  { 
+  {
     match x.borrow() {
-      Ok(foo) => { foo.inc(); trace!("Found {:?}", foo.value); },
+      Ok(foo) => { foo.inc(); trace!("Found {}", foo.value); },
       Err(Nope) => trace!("Bleh")
     }
   }
-  { 
+  {
     let z = x2.borrow();
-    trace!("Z: {:?}", z);
+    trace!("Z: {}", z);
   }
 }
