@@ -71,7 +71,7 @@ impl<T:Clone> Node<T> {
   fn next<'a>(&'a mut self) -> Result<&'a mut Box<Node<T>>, NodeErr> {
     match self.next.as_mut() {
       Some(e) => return Ok(e),
-      None => return Err(Nope)
+      None => return Err(NodeErr::Nope)
     }
   }
 
@@ -79,7 +79,7 @@ impl<T:Clone> Node<T> {
   fn data<'a>(&'a mut self) -> Result<&'a mut T, NodeErr> {
     match self.data {
       Some(ref mut e) => return Ok(e),
-      None => return Err(Nope)
+      None => return Err(NodeErr::Nope)
     }
   }
 

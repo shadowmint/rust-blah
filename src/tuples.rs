@@ -3,17 +3,17 @@ use _macros;
 #[deriving(Show)] 
 enum MyErr {
   None,
-  FailOne,
+  Fail,
 }
 
 fn returns_tuple() -> (int, MyErr) {
   // return (1, None);
-  return (0, FailOne);
+  return (0, MyErr::Fail);
 }
 
 fn returns_result() -> Result<int, MyErr> {
   // return Ok(1);
-  return Err(FailOne);
+  return Err(MyErr::Fail);
 }
 
 #[test]
@@ -24,8 +24,8 @@ fn test_check_return_values() {
   }
   else {
     match x.err().unwrap() {
-      None => {} // Required for match
-      FailOne => {
+      MyErr::None => {} // Required for match
+      MyErr::Fail => {
         trace!("result: Failed One");
       }
     }
@@ -36,7 +36,7 @@ fn test_check_return_values() {
 fn test_check_return_values_2() {
   let (y, err) = returns_tuple();
   match err {
-    None => { trace!("tuple: Is OK: {}", y); },
-    FailOne => { trace!("tuple: Failed one"); }
+    MyErr::None => { trace!("tuple: Is OK: {}", y); },
+    MyErr::Fail => { trace!("tuple: Failed one"); }
   }
 }

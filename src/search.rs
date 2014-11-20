@@ -6,7 +6,7 @@ use std::mem::transmute;
 fn test_seek() {
   let mut x:Vec<u8> = Vec::new();
   x.push_all("Hello World Adfadf oi 英字新聞のジャパンタイムズがおくる通訳・翻訳業界総合 dfs dsdsfsdf ffガイド2015年度版が登場！a adf adsf das  dasf das fzc xv cvzx cxzv czvx czxv df adf adf".as_bytes());
-  x.push_all([255u8, 255u8, 255u8, 255u8, 0u8]); // Invalid utf8 data
+  x.push_all(&[255u8, 255u8, 255u8, 255u8, 0u8]); // Invalid utf8 data
   println!("Boundary: {}", find_utf_boundary(x.as_slice()));
 }
 

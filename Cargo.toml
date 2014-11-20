@@ -11,6 +11,8 @@ name = "now"
 
 [dependencies.uuid]
 git = "https://github.com/rust-lang/uuid.git"
+version = "0.0.2"
 
 [dependencies.glob]
 git = "https://github.com/rust-lang/glob.git"
+version = "0.0.3"

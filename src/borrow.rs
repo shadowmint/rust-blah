@@ -19,7 +19,7 @@ impl Bar {
   fn borrow<'a>(&'a mut self) -> Result<&'a Box<Foo>, BarErr> {
     match self.data {
       Some(ref e) => return Ok(e),
-      None => return Err(Nope)
+      None => return Err(BarErr::Nope)
     }
   }
 }

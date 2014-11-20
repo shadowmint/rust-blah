@@ -28,7 +28,7 @@ impl Bar {
   fn borrow<'a>(&'a mut self) -> Result<&'a mut Box<Foo>, BarErr> {
     match self.data {
       Some(ref mut e) => return Ok(e),
-      None => return Err(Nope)
+      None => return Err(BarErr::Nope)
     }
   }
 
@@ -39,7 +39,7 @@ impl Bar {
   fn return_foo<'a>(&'a mut self) -> Result<&'a mut Box<Foo>, BarErr> {
     match self.data {
       Some(ref mut x) => return Ok(x),
-      None => return Err(Nope)
+      None => return Err(BarErr::Nope)
     }
   }
 
@@ -73,7 +73,7 @@ fn test_create_indirect() {
   {
     match x.borrow() {
       Ok(foo) => { foo.inc(); trace!("Found {}", foo.value); },
-      Err(Nope) => trace!("Bleh")
+      Err(BarErr::Nope) => trace!("Bleh")
     }
   }
   {
