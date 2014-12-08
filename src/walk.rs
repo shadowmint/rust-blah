@@ -2,7 +2,7 @@ extern crate time;
 extern crate glob;
 
 use std::io::fs;
-use std::io::{TypeDirectory, TypeFile};
+use std::io::FileType;
 use self::time::Timespec;
 use self::time::{at, strftime};
 use self::glob::glob;
@@ -17,10 +17,10 @@ pub fn walk(path:&'static str) {
       let stats = fs::lstat(&tmp);
       match stats {
         Ok(stats) => {
-            if stats.kind == TypeDirectory {
+            if stats.kind == FileType::Directory {
               println!("- Directory!");
             }
-            else if stats.kind == TypeFile {
+            else if stats.kind == FileType::RegularFile {
               println!("- File!");
               println!("- Last mod: {}", stats.modified);
               let spec = Timespec::new((stats.modified / 1000) as i64, 0);
