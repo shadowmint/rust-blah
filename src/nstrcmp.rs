@@ -4,7 +4,7 @@ macro_rules! nstrcmp(
   ($x:ident, $y:ident, $n:expr) => (
     $x.len() >= $n && $y.len() >= $n && $x.slice(0, $n) == $y.slice(0, $n)
   );
-)
+);
 
 #[test]
 fn test_nstrcmp() {

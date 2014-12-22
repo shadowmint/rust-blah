@@ -19,7 +19,7 @@ macro_rules! default(
   ($T:ident, $($k:ident: $v:expr), *) => (
     $T { $($k: $v), *, ..Default::default() }
   );
-)
+);
 
 #[test]
 fn test_trace_macro() {
