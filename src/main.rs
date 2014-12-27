@@ -1,3 +1,4 @@
+#![feature(unboxed_closures)]
 #![feature(macro_rules)]
 
 extern crate uuid;
