@@ -4,7 +4,7 @@
 macro_rules! trace(
   ($($arg:tt)*) => (
     {
-      let tmp = format_args!(::std::fmt::format, $($arg)*);
+      let tmp = ::std::fmt::format(format_args!($($arg)*));
       let value:&str = tmp.as_slice();
       let x = ::std::io::stdout().write_line(value);
       println!("{}", x);
