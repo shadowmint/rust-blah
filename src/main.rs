@@ -1,9 +1,6 @@
 #![feature(unboxed_closures)]
 #![feature(macro_rules)]
 
-extern crate uuid;
-extern crate glob;
-
 mod _macros;
 mod borrow;
 mod cast_to_immutable;

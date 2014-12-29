@@ -1,11 +1,9 @@
 extern crate time;
-extern crate glob;
 
 use std::io::fs;
 use std::io::FileType;
 use self::time::Timespec;
 use self::time::{at, strftime};
-use self::glob::glob;
 use _macros;
 
 pub fn walk(path:&'static str) {
@@ -55,11 +53,4 @@ fn test_walk_fails() {
 #[test]
 fn test_walk_works() {
   walk(".");
-}
-
-#[test]
-fn test_glob() {
-  for path in glob("*") {
-    trace!("Glob: {}", path.as_str());
-  }
 }

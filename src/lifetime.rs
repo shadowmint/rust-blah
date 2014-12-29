@@ -1,16 +1,25 @@
-use uuid::Uuid;
 use std::fmt;
 
 struct StateLF;
 
 struct BlahLF {
-  id: Uuid,
+  id: int,
   state: StateLF
 }
 
+static mut _id:int = 0;
+
+fn new_id() -> int {
+  unsafe {
+    _id += 1;
+    return _id;
+  }
+}
+
+
 impl BlahLF {
   fn new() -> BlahLF {
-      let id = Uuid::new_v4();
+      let id = new_id();
       trace!("Created: {}", id);
       return BlahLF {
         id: id,
