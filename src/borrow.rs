@@ -30,11 +30,11 @@ fn test_create_indirect() {
   {
     match x.borrow() {
       Ok(ref foo) => trace!("Found {}", foo.value),
-      Err(Nope) => trace!("Bleh")
+      Err(_) => trace!("Bleh")
     }
   }
   {
-    let z = x2.borrow();
+    let _ = x2.borrow();
     // trace!("Z: {}", z);
   }
 }
