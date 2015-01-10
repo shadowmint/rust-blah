@@ -1,6 +1,6 @@
-#[deriving(Show)]
+#[derive(Show)]
 struct Foo {
-  value: int
+  value: isize
 }
 
 impl Foo {
@@ -14,12 +14,12 @@ impl Foo {
   }
 }
 
-#[deriving(Show)]
+#[derive(Show)]
 struct Bar {
   data: Option<Box<Foo>>
 }
 
-#[deriving(Show)]
+#[derive(Show)]
 enum BarErr {
   Nope
 }
@@ -50,7 +50,7 @@ impl Bar {
 
 #[test]
 fn test_recurse_foo() {
-  let y = box Foo { value: 10 };
+  let y = Box::new(Foo { value: 10 });
   let mut x = Bar { data: Some(y) };
   match x.return_self().return_self().return_foo() {
     Ok(foo) => foo.checker(),
@@ -60,14 +60,14 @@ fn test_recurse_foo() {
 
 #[test]
 fn test_recurse_self() {
-  let y = box Foo { value: 10 };
+  let y = Box::new(Foo { value: 10 });
   let mut x = Bar { data: Some(y) };
   x.return_self().return_self().return_self().checker();
 }
 
 #[test]
 fn test_create_indirect() {
-  let y = box Foo { value: 10 };
+  let y = Box::new(Foo { value: 10 });
   let mut x = Bar { data: Some(y) };
   let mut x2 = Bar { data: None };
   {

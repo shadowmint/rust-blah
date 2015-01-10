@@ -1,8 +1,6 @@
-use _macros;
-
 #[test]
 fn test_map_to_new_values() {
-  let mut x = Vec::<int>::new();
+  let mut x = Vec::<isize>::new();
   for i in range(0, 4) { x.push(i); }
   let mut output = x.iter().map(|y| {
     trace!("Value: {}", y);
@@ -15,9 +13,9 @@ fn test_map_to_new_values() {
 
 #[test]
 fn test_map_replacing_values() {
-  let mut x = Vec::<int>::new();
+  let mut x = Vec::<isize>::new();
   for i in range(0, 4) { x.push(i); }
-  let z = x.iter().map(|y:&int| {
+  let z = x.iter().map(|y:&isize| {
     return *y + 1;
   });
 }

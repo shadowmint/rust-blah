@@ -1,6 +1,4 @@
-use _macros;
-
-#[deriving(Show)] 
+#[derive(Show)]
 struct Indirect<T> {
   _data: T
 }
@@ -20,7 +18,7 @@ impl<T> Indirect<T> {
 
 #[test]
 fn test_create_indirect() {
-  let mut x = Indirect::new(box 10u);
+  let mut x = Indirect::new(Box::new(10us));
   unsafe {
     let y = x.get();
     let z = x.get();

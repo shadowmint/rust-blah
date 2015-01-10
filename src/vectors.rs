@@ -1,8 +1,6 @@
-use _macros;
-
 #[test]
 fn test_vectors() {
-  let x = [1i, 2i, 3i];
+  let x = [1is, 2is, 3is];
   for y in ["1", "2", "3"].iter() {
     trace!("vector: {}", y);
   }

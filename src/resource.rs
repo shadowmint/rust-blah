@@ -12,12 +12,12 @@ impl<'a> Handle {
   }
 }
 
-#[deriving(Show)]
+#[derive(Show)]
 struct Resource {
-  x: int
+  x: isize
 }
 
-#[deriving(Show)]
+#[derive(Show)]
 struct ResourceManager {
   items: Vec<Resource>
 }
@@ -31,7 +31,7 @@ impl ResourceManager {
   fn add(&mut self, r: Resource) {
     self.items.push(r);
   }
-  fn handle(& mut self, id: uint) -> Handle {
+  fn handle(& mut self, id: usize) -> Handle {
     let item:*Resource = self.items.get(id); 
     return Handle { r: item };
   }

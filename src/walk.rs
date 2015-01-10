@@ -1,10 +1,5 @@
-extern crate time;
-
 use std::io::fs;
 use std::io::FileType;
-use self::time::Timespec;
-use self::time::{at, strftime};
-use _macros;
 
 pub fn walk(path:&'static str) {
   let path = Path::new(path);
@@ -21,9 +16,6 @@ pub fn walk(path:&'static str) {
             else if stats.kind == FileType::RegularFile {
               println!("- File!");
               println!("- Last mod: {}", stats.modified);
-              let spec = Timespec::new((stats.modified / 1000) as i64, 0);
-              let now = time::at(spec);
-              println!("-- As tm: {}", strftime("%F - %H:%M:%S", &now));
             }
         },
         _ => {
@@ -40,7 +32,7 @@ pub fn walk(path:&'static str) {
 
 #[test]
 fn test_how_path_works() {
-  let path = box Path::new("xxx");
+  let path = Box::new(Path::new("xxx"));
   let p2 = path.join("things").join("blah").join("dsfdsf");
   println!("{}", p2.display());
 }

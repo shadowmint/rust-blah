@@ -1,7 +1,13 @@
+#![allow(unstable)]
 #![feature(unboxed_closures)]
-#![feature(macro_rules)]
 
-mod _macros;
+#[cfg(test)]
+#[macro_use]
+extern crate debugging;
+
+#[cfg(test)]
+pub use self::debugging::debug;
+
 mod borrow;
 mod cast_to_immutable;
 mod cpus;
@@ -37,7 +43,6 @@ mod vec2d;
 mod search;
 mod hash_test;
 mod sized;
-mod sized2;
 mod find_in_array;
 mod function_pointers;
 

@@ -1,12 +1,12 @@
 use std::collections::HashMap;
-use std::hash::sip::SipState;
 use std::hash::Hash;
+use std::hash::SipHasher;
 
 struct Tmp {
   v:String
 }
 
-#[deriving(Eq)]
+#[derive(Eq)]
 struct TmpKey {
   key:*const String
 }
@@ -22,8 +22,8 @@ impl Tmp {
   }
 }
 
-impl Hash for TmpKey {
-  fn hash(&self, state: &mut SipState) {
+impl Hash<SipHasher> for TmpKey {
+  fn hash(&self, state: &mut SipHasher) {
     let tmp1:&String;
     unsafe {
       tmp1 = &(*self.key);

@@ -1,26 +1,26 @@
 struct Foo {
-  value:uint
+  value:usize
 }
 
-trait HasUIntValue {
-  fn as_uint(self) -> uint;
+trait HasusizeValue {
+  fn as_usize(self) -> usize;
 }
 
 impl Foo {
-  fn add<T:HasUIntValue>(&mut self, value:T) {
-    self.value += value.as_uint();
+  fn add<T:HasusizeValue>(&mut self, value:T) {
+    self.value += value.as_usize();
   }
 }
 
-impl HasUIntValue for int {
-  fn as_uint(self) -> uint {
-    return self as uint;
+impl HasusizeValue for isize {
+  fn as_usize(self) -> usize {
+    return self as usize;
   }
 }
 
-impl HasUIntValue for f64 {
-  fn as_uint(self) -> uint {
-    return self as uint;
+impl HasusizeValue for f64 {
+  fn as_usize(self) -> usize {
+    return self as usize;
   }
 }
 
@@ -28,7 +28,7 @@ impl HasUIntValue for f64 {
 fn test_add_with_int()
 {
   let mut x = Foo { value: 10 };
-  x.add(10i);
+  x.add(10is);
   assert!(x.value == 20);
 }
 

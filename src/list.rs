@@ -1,7 +1,6 @@
-use _macros;
 use std::mem::swap;
 
-#[deriving(Show)]
+#[derive(Show)]
 struct Node<T> {
   next:Option<Box<Node<T>>>,
   data:Option<T>
@@ -41,9 +40,9 @@ impl<T:Clone> Node<T> {
   /** Attach a node as the 'next' node in this chain */
   fn push<'a>(&'a mut self, value: T) -> &'a mut Box<Node<T>> {
     match self.next.take() {
-      None => self._push_node(box Node::new(value)),
+      None => self._push_node(Box::new(Node::new(value))),
       Some(v) => {
-        let mut next = box Node::new(value);
+        let mut next = Box::new(Node::new(value));
         next._push_node(v);
         self._push_node(next);
       }
@@ -58,7 +57,7 @@ impl<T:Clone> Node<T> {
   fn unshift<'a>(&'a mut self, value: T) -> &'a mut Node<T> {
     let mut first:Node<T> = Node::new(value);
     swap(self, & mut first);
-    self.next = Some(box first);
+    self.next = Some(Box::new(first));
     return self;
   }
 
@@ -84,7 +83,7 @@ impl<T:Clone> Node<T> {
   }
 
   /** Apply some operator to each element in the list*/
-  fn each<U>(&mut self, context:& mut U, c:|context: & mut U, value: & mut T|) {
+  fn each<U>(&mut self, context:& mut U, c:Fn<(& mut U, & mut T), ()>) {
     Node::_applyEach(context, self.data(), |x, y| c(x, y));
     let mut busy = true;
     let mut here = self.next();
@@ -100,7 +99,7 @@ impl<T:Clone> Node<T> {
   }
 
   /** Actually apply an each function to a data point */
-  fn _applyEach<U>(context:& mut U, r:Result<& mut T, NodeErr>, c:|context:& mut U, value: & mut T|) {
+  fn _applyEach<U>(context:& mut U, r:Result<& mut T, NodeErr>, c:Fn<(& mut U, & mut T), ()>) {
     match r {
       Ok(e) => {
         c(context, e)
@@ -110,18 +109,18 @@ impl<T:Clone> Node<T> {
   }
 
   /** Walk the entire chain and count values */
-  fn count(&mut self) -> int {
+  fn count(&mut self) -> isize {
     let mut count = 0;
-    self.each(& mut count, |c:& mut int, _:& mut T| {
+    self.each(& mut count, |c:& mut isize, _:& mut T| {
       *c += 1;
     });
     return count;
   }
 
   /* Return an immutable filtered set of values */
-  fn count_filtered(&mut self, c:|value: & T| -> bool) -> int {
+  fn count_filtered(&mut self, c:Fn<(&T), bool>) -> isize {
     let mut count = 0;
-    self.each(& mut count, |count:& mut int, value:& mut T| {
+    self.each(& mut count, |count:& mut isize, value:& mut T| {
       if c(value) {
         *count += 1;
       }
@@ -130,7 +129,7 @@ impl<T:Clone> Node<T> {
   }
 
   /* Return a mutable filtered vector of values */
-  fn filter<'a>(&mut self, c:|value: & T| -> bool) -> Vec<T> {
+  fn filter<'a>(&mut self, c:Fn<(& T), bool>) -> Vec<T> {
     let mut rtn:Vec<T> = Vec::new();
     self.each(& mut rtn, |v:& mut Vec<T>, value:& mut T| {
       if c(value) {
@@ -141,11 +140,11 @@ impl<T:Clone> Node<T> {
   }
 
   /* Return the nth entry in the list */
-  fn index<'a>(&'a mut self, index:int) -> Option<Box<T>> {
+  fn index<'a>(&'a mut self, index:isize) -> Option<Box<T>> {
     let mut rtn:Option<Box<T>> = None;
     {
       let mut count = 0;
-      self.each(& mut count, |count:& mut int, value:& mut T| {
+      self.each(& mut count, |count:& mut isize, value:& mut T| {
         let mut found = false;
         {
           if *count == index {
@@ -154,7 +153,7 @@ impl<T:Clone> Node<T> {
           *count += 1;
         }
         if found {
-          rtn = Some(box value.clone());
+          rtn = Some(Box::new(value.clone()));
         }
       });
     }
@@ -164,19 +163,19 @@ impl<T:Clone> Node<T> {
 
 #[test]
 fn test_create_node() {
-  let mut x = Node::new(10i);
+  let mut x = Node::new(10is);
   assert!(x.count() == 1);
 }
 
 #[test]
 fn test_create_blank_node() {
-  let mut x = Node::<int>::blank();
+  let mut x = Node::<isize>::blank();
   assert!(x.count() == 0);
 }
 
 #[test]
 fn test_create_from_vector() {
-  let mut value = Vec::<int>::new();
+  let mut value = Vec::<isize>::new();
   for x in range(0, 10) { value.push(x); }
   let mut x = Node::import(value);
   assert!(x.count() == 10);
@@ -184,25 +183,25 @@ fn test_create_from_vector() {
 
 #[test]
 fn test_create_node_chain() {
-  let mut x = box Node::<int>::blank();
+  let mut x = Box::new(Node::<isize>::blank());
   x.push(10).push(11).push(12).push(13);
   assert!(x.count() == 4);
 }
 
 #[test]
 fn test_count_filtered_node_chain() {
-  let mut x = box Node::<int>::blank();
+  let mut x = Box::new(Node::<isize>::blank());
   for i in range(0, 20) { x.push(i); }
-  assert!(x.count_filtered(|v:&int| -> bool { return *v < 5; }) == 5);
-  assert!(x.count_filtered(|v:&int| -> bool { return *v == 10; }) == 1);
-  assert!(x.count_filtered(|v:&int| -> bool { return *v >= 5 && *v <= 10; }) == 6);
+  assert!(x.count_filtered(|v:&isize| -> bool { return *v < 5; }) == 5);
+  assert!(x.count_filtered(|v:&isize| -> bool { return *v == 10; }) == 1);
+  assert!(x.count_filtered(|v:&isize| -> bool { return *v >= 5 && *v <= 10; }) == 6);
 }
 
 #[test]
 fn test_filter_node_chain() {
-  let mut x = box Node::<int>::blank();
+  let mut x = Box::new(Node::<isize>::blank());
   for i in range(0, 20) { x.push(i); }
-  let output = x.filter(|v:&int| -> bool { return *v >= 5 && *v <= 10; });
+  let output = x.filter(|v:&isize| -> bool { return *v >= 5 && *v <= 10; });
   for i in range(5, 10) {
     assert!(output.contains(&i));
   }
@@ -210,7 +209,7 @@ fn test_filter_node_chain() {
 
 #[test]
 fn test_unshift() {
-  let mut x = box Node::<int>::blank();
+  let mut x = Box::new(Node::<isize>::blank());
   x.push(10).push(11).push(12).push(13);
   x.unshift(9).unshift(8).unshift(7);
   assert!(*x.index(0).unwrap() == 7);

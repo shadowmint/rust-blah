@@ -1,11 +1,9 @@
-use _macros;
-
-pub fn do_something() -> uint {
+pub fn do_something() -> usize {
   return 99;
 }
 
 struct Blah<'a> {
-  x:&'a (Fn<(),uint> + 'a)
+  x:&'a (Fn<(),usize> + 'a)
 }
 
 #[test]

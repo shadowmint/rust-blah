@@ -5,7 +5,7 @@ use std::ops::Drop;
 use std::intrinsics::forget;
 use std::mem::transmute;
 
-struct Foo { x: int }
+struct Foo { x: isize }
 
 impl Drop for Foo {
   fn drop(&mut self) {
@@ -14,13 +14,13 @@ impl Drop for Foo {
 }
 
 fn test_foo() {
-  let mut x = box Foo { x: 10 };
+  let mut x = Box::new(Foo { x: 10 });
 
   let mut y = & mut *x as * mut Foo;
-  println!("Address Y: {:x}", y as uint);
+  println!("Address Y: {:x}", y as usize);
 
   let mut z = y as * mut c_void;
-  println!("Address Z: {:x}", z as uint);
+  println!("Address Z: {:x}", z as usize);
 
   // Forget x so we don't worry about it
   unsafe { forget(x); }
@@ -29,10 +29,10 @@ fn test_foo() {
     let res_x:Box<Foo>;
     unsafe {
       let mut res_z = z as * mut Foo;
-      println!("Ressurected Z: {:x}", z as uint);
+      println!("Ressurected Z: {:x}", z as usize);
 
       let mut res_y = & mut (*res_z);
-      println!("Ressurected Y: {:x}", y as uint);
+      println!("Ressurected Y: {:x}", y as usize);
 
       let mut tmp:Box<Foo> = transmute(res_y);
       println!("The things~");

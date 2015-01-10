@@ -1,3 +1,3 @@
 pub trait Imported {
-  fn hello(x:int) -> int;
+  fn hello(x:isize) -> isize;
 }

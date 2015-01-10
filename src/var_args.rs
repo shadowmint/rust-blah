@@ -1,5 +1,3 @@
-#![feature(macro_rules)]
-
 struct Foo;
 
 enum FooArgs {
@@ -7,13 +5,13 @@ enum FooArgs {
 }
 
 impl Foo {
-  fn add2(&self, a:int, b:int) -> int {
+  fn add2(&self, a:isize, b:isize) -> isize {
     return a + b;
   }
-  fn add3(&self, a:int, b:int, c:int) -> int {
+  fn add3(&self, a:isize, b:isize, c:isize) -> isize {
     return a + b + c;
   }
-  fn add4(&self, a:int, b:int, c:int, d:int) -> int {
+  fn add4(&self, a:isize, b:isize, c:isize, d:isize) -> isize {
     return a + b + c + d;
   }
 }

@@ -1,17 +1,15 @@
-use _macros;
-
-#[deriving(Show)] 
+#[derive(Show)] 
 enum MyErr {
   None,
   Fail,
 }
 
-fn returns_tuple() -> (int, MyErr) {
+fn returns_tuple() -> (isize, MyErr) {
   // return (1, None);
   return (0, MyErr::Fail);
 }
 
-fn returns_result() -> Result<int, MyErr> {
+fn returns_result() -> Result<isize, MyErr> {
   // return Ok(1);
   return Err(MyErr::Fail);
 }

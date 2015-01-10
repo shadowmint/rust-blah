@@ -1,16 +1,14 @@
-use _macros;
-
-#[deriving(Show)]
+#[derive(Show)]
 struct Foo {
-  value: int
+  value: isize
 }
 
-#[deriving(Show)]
+#[derive(Show)]
 struct Bar {
   data: Option<Box<Foo>>
 }
 
-#[deriving(Show)]
+#[derive(Show)]
 enum BarErr {
   Nope
 }
@@ -26,7 +24,7 @@ impl Bar {
 
 #[test]
 fn test_create_indirect() {
-  let y = box Foo { value: 10 };
+  let y = Box::new(Foo { value: 10 });
   let mut x = Bar { data: Some(y) };
   let mut x2 = Bar { data: None };
   {

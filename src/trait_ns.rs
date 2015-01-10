@@ -1,5 +1,3 @@
-use _macros;
-
 mod foo {
   pub trait Foo {
     fn hello(&self);
@@ -8,7 +6,7 @@ mod foo {
 
 mod bar {
   pub trait Foo {
-    fn hello(&self, x:int);
+    fn hello(&self, x:isize);
   }
 }
 
@@ -21,7 +19,7 @@ impl foo::Foo for Item {
 }
 
 impl bar::Foo for Item {
-  fn hello(&self, x:int) {
+  fn hello(&self, x:isize) {
     trace!("Hello for bar: {}", x);
   }
 }

@@ -1,16 +1,15 @@
 use std::default::Default;
-use _macros;
 
 struct CItem {
-  x: int
+  x: isize
 }
 
 trait CTItem {
-  fn x(&self) -> int;
+  fn x(&self) -> isize;
 }
 
 impl CTItem for CItem {
-  fn x(&self) -> int {
+  fn x(&self) -> isize {
     return self.x;
   }
 }

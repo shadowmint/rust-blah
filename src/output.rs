@@ -1,6 +1,6 @@
 use std::io::stdio::stdout;
 
-fn trace(x:int) {
+fn trace(x:isize) {
   let mut out = stdout();
   out.write_le_int(x);
 }

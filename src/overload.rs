@@ -3,7 +3,7 @@ enum FooBar<U,V> {
   Bar(V)
 }
 
-fn doit(x:FooBar<int,f32>) -> bool {
+fn doit(x:FooBar<isize,f32>) -> bool {
   match x {
     FooBar::Foo(x) => { trace!("Got an int"); return false; },
     FooBar::Bar(x) => { trace!("Got a f32"); return true; }

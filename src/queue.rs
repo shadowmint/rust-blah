@@ -1,5 +1,5 @@
 struct Node {
-  value:int,
+  value:isize,
   next:Option<Box<Node>>
 }
 
@@ -9,23 +9,23 @@ struct QQ {
 }
 
 impl QQ {
-  fn push(& mut self, x:int) {
+  fn push(& mut self, x:isize) {
     match self.tail {
       Some(tp) => {
         let mut tail:& mut Box<Node>;
         unsafe { tail = & mut (*tp); }
-        tail.next = Some(box Node{ value: x, next: None });
+        tail.next = Some(Box::new(Node{ value: x, next: None }));
         self.tail = Some(tail.next.as_mut().unwrap() as * mut Box<Node>);
       },
       None => {
-        self.head = Some(box Node{ value: x, next: None });
+        self.head = Some(Box::new(Node{ value: x, next: None }));
         self.tail = Some(self.head.as_mut().unwrap() as * mut Box<Node>);
       }
     }
   }
 
-  // Should probably be Result<int, Err> but I'm being lazy.
-  fn pop(& mut self) -> int {
+  // Should probably be Result<isize, Err> but I'm being lazy.
+  fn pop(& mut self) -> isize {
     if self.head.is_none() {
       return -1;
     }

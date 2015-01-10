@@ -1,9 +1,8 @@
 use std::default::Default;
-use _macros;
 
 struct CItem {
-  x: int,
-  y: int,
+  x: isize,
+  y: isize,
   _z: &'static str
 }
 
@@ -23,7 +22,7 @@ macro_rules! default(
 
 #[test]
 fn test_trace_macro() {
-  trace!("Hello World {} {}", 1i, 2i);
+  trace!("Hello World {} {}", 1is, 2is);
 }
 
 // NB. See how we use the defaults

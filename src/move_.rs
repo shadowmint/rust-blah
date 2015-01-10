@@ -1,23 +1,21 @@
-use _macros;
-
-#[deriving(Show)]
+#[derive(Show)]
 enum List {
-  Node(Box<List>), 
+  Node(Box<List>),
   Nil
 }
 
-fn count(list: &List) -> uint { 
-  let mut y = box &list;
+fn count(list: &List) -> usize {
+  let mut y = Box::new(&list);
   let mut z = y;
   trace!("?? {}", z);
-  match *list { 
-    List::Node(box ref next) => 1+count(next), 
-    List::Nil=> 0 
-  } 
+  match *list {
+    List::Node(ref next) => 1+count(next),
+    List::Nil=> 0
+  }
 }
 
 #[test]
 fn test_list_things() {
-  let x = List::Node(box List::Node(box List::Node(box List::Nil)));
+  let x = List::Node(Box::new(List::Node(Box::new(List::Node(Box::new(List::Nil))))));
   trace!("Count: {}", count(&x));
 }

@@ -4,18 +4,17 @@ use std::intrinsics::size_of;
 use self::libc::malloc;
 use self::libc::free;
 use self::libc::c_void;
-use _macros;
 
-#[deriving(Show)]
+#[derive(Show)]
 struct Foo {
-  x: int,
-  y: * mut int
+  x: isize,
+  y: * mut isize
 }
 
 #[test]
 fn test_intrinsic_memory_block() {
-  let mut x = 0i;
-  let mut p = Foo { x: 10i, y: & mut x as * mut int};
+  let mut x = 0is;
+  let mut p = Foo { x: 10is, y: & mut x as * mut isize};
   let mut q:* mut Foo;
   unsafe {
     trace!("Block size: {}", size_of::<Foo>());
@@ -37,7 +36,7 @@ fn test_intrinsic_memory_block() {
     trace!("scope1");
     (*q).x = 100;
     trace!("scope3");
-    (*q).y = & mut x as * mut int;
+    (*q).y = & mut x as * mut isize;
     trace!("Hii... {}", *q);
     trace!("scope2");
   }

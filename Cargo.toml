@@ -8,3 +8,7 @@ name = "main"
 
 [[bin]]
 name = "now"
+
+[dependencies.debugging]
+git = "https://github.com/shadowmint/rust-debugging"
+tag = "0.1.8"

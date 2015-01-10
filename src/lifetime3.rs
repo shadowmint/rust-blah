@@ -1,6 +1,4 @@
-use _macros;
-
-#[deriving(Show)]
+#[derive(Show)]
 struct Foo<'a, T:'a> {
   data: &'a T
 }
@@ -15,7 +13,7 @@ impl<'a, T> Foo<'a, T> {
 
 #[test]
 fn test_scope() {
-  let bar = Foo { data: &Foo { data: &10i } };
+  let bar = Foo { data: &Foo { data: &10is } };
   let marked;
   {
     marked = bar.returns_to_scope();

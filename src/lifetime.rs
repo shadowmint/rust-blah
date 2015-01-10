@@ -3,13 +3,13 @@ use std::fmt;
 struct StateLF;
 
 struct BlahLF {
-  id: int,
+  id: isize,
   state: StateLF
 }
 
-static mut _id:int = 0;
+static mut _id:isize = 0;
 
-fn new_id() -> int {
+fn new_id() -> isize {
   unsafe {
     _id += 1;
     return _id;
@@ -45,20 +45,20 @@ impl Drop for BlahLF {
 
 #[test]
 fn test_lifetime_scope() {
-  let mut x:Box<BlahLF> = box BlahLF::new();
+  let mut x:Box<BlahLF> = Box::new(BlahLF::new());
   let y = x.state();
-  let z = box BlahLF::new();
+  let z = Box::new(BlahLF::new());
 
   // NB. We can't do this because x has a borrowed state
   // x = ~BlahLF::new();
 }
 
 struct HasValues {
-  values: Vec<int>
+  values: Vec<isize>
 }
 
-fn borrow_values<'a>(x:&'a HasValues) -> Vec<&'a int> {
-  let mut rtn:Vec<&'a int> = Vec::new();
+fn borrow_values<'a>(x:&'a HasValues) -> Vec<&'a isize> {
+  let mut rtn:Vec<&'a isize> = Vec::new();
   for i in range(0, x.values.len()) {
     rtn.push(x.values.get(i).unwrap());
   }
@@ -67,7 +67,7 @@ fn borrow_values<'a>(x:&'a HasValues) -> Vec<&'a int> {
 
 #[test]
 fn test_lifetime_scope_again() {
-  let mut q = HasValues { values: Vec::<int>::new() };
+  let mut q = HasValues { values: Vec::<isize>::new() };
   q.values.push(1);
   q.values.push(2);
   q.values.push(3);
@@ -77,8 +77,8 @@ fn test_lifetime_scope_again() {
   trace!("Output of lifetime test: {}", p);
 }
 
-fn borrow_values_that_match<'a>(x:&'a HasValues, filter:|f:&int| -> bool) -> Vec<&'a int> {
-  let mut rtn:Vec<&'a int> = Vec::new();
+fn borrow_values_that_match<'a>(x:&'a HasValues, filter:Fn<(&isize), bool>) -> Vec<&'a isize> {
+  let mut rtn:Vec<&'a isize> = Vec::new();
   for i in range(0, x.values.len()) {
     if filter(x.values.get(i).unwrap()) {
       rtn.push(x.values.get(i).unwrap());
@@ -90,6 +90,6 @@ fn borrow_values_that_match<'a>(x:&'a HasValues, filter:|f:&int| -> bool) -> Vec
 #[test]
 fn test_lifetime_scope_with_filter() {
   let mut q = HasValues { values: vec!(1, 2, 3, 4, 5) };
-  let mut p = borrow_values_that_match(&q, |f:&int| -> bool { return *f > 2; });
+  let mut p = borrow_values_that_match(&q, |f:&isize| -> bool { return *f > 2; });
   trace!("Output of lifetime test: {}", p);
 }

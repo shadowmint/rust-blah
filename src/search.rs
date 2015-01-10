@@ -1,4 +1,4 @@
-use std::str::is_utf8;
+use std::str::from_utf8;
 use std::raw::Slice as Slice_;
 use std::mem::transmute;
 
@@ -10,17 +10,17 @@ fn test_seek() {
   println!("Boundary: {}", find_utf_boundary(x.as_slice()));
 }
 
-fn find_utf_boundary(value:&[u8]) -> int {
+fn find_utf_boundary(value:&[u8]) -> isize {
   unsafe {
     let tmp:Slice_<u8> = transmute(value);
-    let mut maybe_invalid = 0i;
-    let mut marker = 0i;
+    let mut maybe_invalid = 0is;
+    let mut marker = 0is;
     for i in range(0, tmp.len) {
       let view:Slice_<u8> = Slice_ { data:tmp.data, len: i };
       let view_as_bytes:&[u8] = transmute(view);
-      if !is_utf8(view_as_bytes) {
+      if from_utf8(view_as_bytes).is_err() {
         if maybe_invalid == 0 {
-          marker = i as int;
+          marker = i as isize;
           maybe_invalid = 1;
         }
         else {
