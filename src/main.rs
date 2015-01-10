@@ -9,7 +9,7 @@ extern crate debugging;
 pub use self::debugging::debug;
 
 mod borrow;
-mod cast_to_immutable;
+/*mod cast_to_immutable;
 mod cpus;
 mod func_ptr;
 mod generics;
@@ -44,7 +44,7 @@ mod search;
 mod hash_test;
 mod sized;
 mod find_in_array;
-mod function_pointers;
+mod function_pointers;*/
 
 fn main() {
 }

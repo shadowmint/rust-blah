@@ -1,9 +1,9 @@
-fn foo(_:isize) { trace!("func pointer"); }
-type HasInt = FnMut<isize, ()> + 'static;
+fn foo(_:isize) -> () { trace!("func pointer"); }
+type HasInt<'a> = &'a (FnMut<(isize), ()> + 'a);
 
 #[test]
 fn fp_test() {
-   let x:HasInt = foo;
-   let y:HasInt = |_:isize| { trace!("closure"); };
-   x(1); y(2);
+   let x:HasInt = &foo;
+   let y:HasInt = &|&mut:_:isize| { trace!("closure"); };
+   x.call_mut(1); y.call_mut(2);
 }

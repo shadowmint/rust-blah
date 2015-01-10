@@ -35,6 +35,6 @@ fn test_create_indirect() {
   }
   {
     let z = x2.borrow();
-    trace!("Z: {}", z);
+    // trace!("Z: {}", z);
   }
 }
