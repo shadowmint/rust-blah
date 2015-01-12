@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 use std::hash::Hash;
-use std::hash::SipHasher;
+use std::hash::Hasher;
+use std::hash::Writer;
 
 struct Tmp {
   v:String
@@ -22,8 +23,8 @@ impl Tmp {
   }
 }
 
-impl Hash<SipHasher> for TmpKey {
-  fn hash(&self, state: &mut SipHasher) {
+impl<S: Hasher + Writer> Hash<S> for TmpKey {
+  fn hash(&self, state: &mut S) {
     let tmp1:&String;
     unsafe {
       tmp1 = &(*self.key);
