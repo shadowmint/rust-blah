@@ -35,7 +35,7 @@ fn test_it() {
     unsafe {
       q = & mut (*y);
     }
-    println!("{} -> {}", q.offset, z);
+    println!("{:?} -> {:?}", q.offset, z);
   }
   println!("End");
 }

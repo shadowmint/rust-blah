@@ -9,8 +9,8 @@ fn test_nstrcmp() {
   let x = "Hello World";
   let y = "Hello";
   let z = "hello";
-  trace!("nstrcmp: {}", nstrcmp!(x, y, 5));
-  trace!("nstrcmp: {}", nstrcmp!(x, y, 10));
-  trace!("nstrcmp: {}", nstrcmp!(x, y, 3));
-  trace!("nstrcmp: {}", nstrcmp!(z, y, 4));
+  trace!("nstrcmp: {:?}", nstrcmp!(x, y, 5));
+  trace!("nstrcmp: {:?}", nstrcmp!(x, y, 10));
+  trace!("nstrcmp: {:?}", nstrcmp!(x, y, 3));
+  trace!("nstrcmp: {:?}", nstrcmp!(z, y, 4));
 }

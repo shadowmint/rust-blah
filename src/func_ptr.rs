@@ -10,5 +10,5 @@ struct Blah<'a> {
 fn test_this_thing() {
   let x = Blah { x: &do_something };
   let y = (*x.x).call(());
-  trace!("{}", y);
+  trace!("{:?}", y);
 }

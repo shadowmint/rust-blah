@@ -15,18 +15,18 @@ pub fn walk(path:&'static str) {
             }
             else if stats.kind == FileType::RegularFile {
               println!("- File!");
-              println!("- Last mod: {}", stats.modified);
+              println!("- Last mod: {:?}", stats.modified);
             }
         },
         _ => {
           println!("Stat failed");
         }
       }
-      println!("walk: {}", value.display());
+      println!("walk: {:?}", value.display());
     }
   }
   else {
-      println!("walk: Invalid target: {}", path.display());
+      println!("walk: Invalid target: {:?}", path.display());
   }
 }
 
@@ -34,7 +34,7 @@ pub fn walk(path:&'static str) {
 fn test_how_path_works() {
   let path = Box::new(Path::new("xxx"));
   let p2 = path.join("things").join("blah").join("dsfdsf");
-  println!("{}", p2.display());
+  println!("{:?}", p2.display());
 }
 
 #[test]

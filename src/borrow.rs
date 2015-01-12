@@ -29,12 +29,12 @@ fn test_create_indirect() {
   let mut x2 = Bar { data: None };
   {
     match x.borrow() {
-      Ok(ref foo) => trace!("Found {}", foo.value),
+      Ok(ref foo) => trace!("Found {:?}", foo.value),
       Err(_) => trace!("Bleh")
     }
   }
   {
     let _ = x2.borrow();
-    // trace!("Z: {}", z);
+    // trace!("Z: {:?}", z);
   }
 }

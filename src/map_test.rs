@@ -3,11 +3,11 @@ fn test_map_to_new_values() {
   let mut x = Vec::<isize>::new();
   for i in range(0, 4) { x.push(i); }
   let mut output = x.iter().map(|y| {
-    trace!("Value: {}", y);
+    trace!("Value: {:?}", y);
     return *y + 1;
   });
   for x in output {
-    trace!("{}", x);
+    trace!("{:?}", x);
   }
 }
 

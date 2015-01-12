@@ -22,7 +22,7 @@ fn test_create_indirect() {
   unsafe {
     let y = x.get();
     let z = x.get();
-    trace!("{}", *y);
-    trace!("{}", *z);
+    trace!("{:?}", *y);
+    trace!("{:?}", *z);
   }
 }

@@ -18,7 +18,7 @@ fn returns_result() -> Result<isize, MyErr> {
 fn test_check_return_values() {
   let x = returns_result();
   if x.is_ok() {
-    trace!("result: Is OK: {}", x.unwrap());
+    trace!("result: Is OK: {:?}", x.unwrap());
   }
   else {
     match x.err().unwrap() {
@@ -34,7 +34,7 @@ fn test_check_return_values() {
 fn test_check_return_values_2() {
   let (y, err) = returns_tuple();
   match err {
-    MyErr::None => { trace!("tuple: Is OK: {}", y); },
+    MyErr::None => { trace!("tuple: Is OK: {:?}", y); },
     MyErr::Fail => { trace!("tuple: Failed one"); }
   }
 }

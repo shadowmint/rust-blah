@@ -57,5 +57,5 @@ fn test_resource() {
     // value2.x = 100; // ADAFAF Undefined behaviour!
   }
 
-  println!("{}", r);
+  println!("{:?}", r);
 }

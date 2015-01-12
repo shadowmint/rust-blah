@@ -24,8 +24,8 @@ fn test_lifetime_scope() {
 
   match x {
     ComplexEvent::A(ref a, _) => z = a,
-    ComplexEvent::B(b, _) => trace!("{}", b)
+    ComplexEvent::B(b, _) => trace!("{:?}", b)
   }
 
-  trace!("Accessed values: {}", z);
+  trace!("Accessed values: {:?}", z);
 }

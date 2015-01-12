@@ -18,7 +18,7 @@ fn test_create_generic_new() {
 fn test_create_generic_instance() {
   let x = Gen { data: Some(0is) };
   if (!x.data.is_none()) {
-    trace!("Hello With int value: {}", x);
+    trace!("Hello With int value: {:?}", x);
   }
 }
 
@@ -26,6 +26,6 @@ fn test_create_generic_instance() {
 fn test_create_generic_instance_with_none() {
   let x = Gen { data: None::<isize> };
   if (x.data.is_none()) {
-    trace!("No data found: {}", x);
+    trace!("No data found: {:?}", x);
   }
 }

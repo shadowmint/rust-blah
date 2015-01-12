@@ -1,15 +1,12 @@
 #![allow(unstable)]
 #![feature(unboxed_closures)]
 
-#[cfg(test)]
 #[macro_use]
 extern crate debugging;
-
-#[cfg(test)]
 pub use self::debugging::debug;
 
 mod borrow;
-/*mod cast_to_immutable;
+mod cast_to_immutable;
 mod cpus;
 mod func_ptr;
 mod generics;
@@ -21,7 +18,7 @@ mod iterators;
 mod lifetime;
 mod lifetime2;
 mod lifetime3;
-mod list;
+//mod list;
 mod map_test;
 mod move_;
 mod mutable_borrow;
@@ -44,4 +41,7 @@ mod search;
 mod hash_test;
 mod sized;
 mod find_in_array;
-mod function_pointers;*/
+mod function_pointers;
+
+fn main() {
+}

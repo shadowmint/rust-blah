@@ -31,7 +31,7 @@ macro_rules! add(
 #[test]
 fn test_var_args() {
   let foo = Foo;
-  println!("Add:{}", add!(foo, 1, 2));
-  println!("Add:{}", add!(foo, 1, 2, 3));
-  println!("Add:{}", add!(foo, 1, 2, 3, 4));
+  println!("Add:{:?}", add!(foo, 1, 2));
+  println!("Add:{:?}", add!(foo, 1, 2, 3));
+  println!("Add:{:?}", add!(foo, 1, 2, 3, 4));
 }

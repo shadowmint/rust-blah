@@ -28,7 +28,7 @@ fn test_lifetime_return_scope() {
   {
     let marker = 10is;
     let marked = bar.returns_to_scope_with_marker(&marker);
-    trace!("{}", marked);
+    trace!("{:?}", marked);
   }
 }
 
@@ -43,8 +43,8 @@ fn test_return_a_pointer() {
   let x:&isize;
   {
     unsafe { x = returns_value(); }
-    trace!("Hi: {}", x);
+    trace!("Hi: {:?}", x);
   }
   let y = x;
-  trace!("Hi2: {}", y);
+  trace!("Hi2: {:?}", y);
 }

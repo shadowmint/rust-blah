@@ -20,7 +20,7 @@ fn new_id() -> isize {
 impl BlahLF {
   fn new() -> BlahLF {
       let id = new_id();
-      trace!("Created: {}", id);
+      trace!("Created: {:?}", id);
       return BlahLF {
         id: id,
         state: StateLF
@@ -32,14 +32,14 @@ impl BlahLF {
 }
 
 impl fmt::Show for BlahLF {
-  fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-    return f.write("<BlahLF:: ".as_slice().as_bytes());
+  fn fmt(&self, f: &mut fmt::Formatter) -> Result<(), fmt::Error> {
+    return write!(f, "<BlahLF:: ");
   }
 }
 
 impl Drop for BlahLF {
   fn drop(&mut self) {
-    trace!("Dropped element: {}", *self);
+    trace!("Dropped element: {:?}", *self);
   }
 }
 
@@ -74,13 +74,13 @@ fn test_lifetime_scope_again() {
   q.values.push(4);
   q.values.push(5);
   let mut p = borrow_values(&q);
-  trace!("Output of lifetime test: {}", p);
+  trace!("Output of lifetime test: {:?}", p);
 }
 
-fn borrow_values_that_match<'a>(x:&'a HasValues, filter:Fn<(&isize), bool>) -> Vec<&'a isize> {
-  let mut rtn:Vec<&'a isize> = Vec::new();
+fn borrow_values_that_match<'a, 'b>(x:&'a HasValues, filter:&'b Fn(isize) -> bool) -> Vec<&'a isize> {
+  let mut rtn:Vec<&isize> = Vec::new();
   for i in range(0, x.values.len()) {
-    if filter(x.values.get(i).unwrap()) {
+    if filter(*x.values.get(i).unwrap()) {
       rtn.push(x.values.get(i).unwrap());
     }
   }
@@ -90,6 +90,6 @@ fn borrow_values_that_match<'a>(x:&'a HasValues, filter:Fn<(&isize), bool>) -> V
 #[test]
 fn test_lifetime_scope_with_filter() {
   let mut q = HasValues { values: vec!(1, 2, 3, 4, 5) };
-  let mut p = borrow_values_that_match(&q, |f:&isize| -> bool { return *f > 2; });
-  trace!("Output of lifetime test: {}", p);
+  let mut p = borrow_values_that_match(&q, &|&:f:isize| -> bool { return f > 2; });
+  trace!("Output of lifetime test: {:?}", p);
 }

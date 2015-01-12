@@ -20,7 +20,7 @@ impl foo::Foo for Item {
 
 impl bar::Foo for Item {
   fn hello(&self, x:isize) {
-    trace!("Hello for bar: {}", x);
+    trace!("Hello for bar: {:?}", x);
   }
 }
 

@@ -4,10 +4,8 @@ version = "0.1.0"
 authors = [ "linderd@iinet.net.au" ]
 
 [[bin]]
-name = "main"
-
-[[bin]]
-name = "now"
+name = "tests"
+path = "src/bin.rs"
 
 [dependencies.debugging]
 git = "https://github.com/shadowmint/rust-debugging"

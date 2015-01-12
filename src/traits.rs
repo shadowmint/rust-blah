@@ -22,7 +22,7 @@ macro_rules! default(
 
 #[test]
 fn test_trace_macro() {
-  trace!("Hello World {} {}", 1is, 2is);
+  trace!("Hello World {:?} {:?}", 1is, 2is);
 }
 
 // NB. See how we use the defaults
