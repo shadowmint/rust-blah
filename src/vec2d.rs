@@ -20,7 +20,7 @@ impl Index<usize> for Vec2d {
 }
 
 impl Index<usize> for Vec2dView {
-  type Output = Vec2dView;
+  type Output = usize;
   fn index(&self, index:&usize) -> &usize {
     unsafe {
       return &(*((&self.value as *const usize).offset(*index as isize)));

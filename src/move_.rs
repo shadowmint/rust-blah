@@ -9,7 +9,7 @@ fn count(list: &List) -> usize {
   let mut z = y;
   trace!("?? {:?}", z);
   match *list {
-    List::Node(ref next) => 1+count(next),
+    List::Node(ref next) => 1+count(&**next),
     List::Nil=> 0
   }
 }
