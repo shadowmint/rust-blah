@@ -18,7 +18,6 @@ mod iterators;
 mod lifetime;
 mod lifetime2;
 mod lifetime3;
-//mod list;
 mod map_test;
 mod move_;
 mod mutable_borrow;
@@ -42,6 +41,7 @@ mod hash_test;
 mod sized;
 mod find_in_array;
 mod function_pointers;
+//mod list;
 
 fn main() {
 }
