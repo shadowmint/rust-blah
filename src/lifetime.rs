@@ -31,7 +31,7 @@ impl BlahLF {
   }
 }
 
-impl fmt::Show for BlahLF {
+impl fmt::Debug for BlahLF {
   fn fmt(&self, f: &mut fmt::Formatter) -> Result<(), fmt::Error> {
     return write!(f, "<BlahLF:: ");
   }

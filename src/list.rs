@@ -1,6 +1,6 @@
 use std::mem::swap;
 
-#[derive(Show)]
+#[derive(Debug)]
 struct Node<T> {
   next:Option<Box<Node<T>>>,
   data:Option<T>

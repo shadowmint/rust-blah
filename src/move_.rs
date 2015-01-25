@@ -1,4 +1,4 @@
-#[derive(Show)]
+#[derive(Debug)]
 enum List {
   Node(Box<List>),
   Nil

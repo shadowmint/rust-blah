@@ -1,4 +1,4 @@
-#[derive(Show)]
+#[derive(Debug)]
 struct Foo<T> {
   data: Box<T>
 }

@@ -12,12 +12,12 @@ impl<'a> Handle {
   }
 }
 
-#[derive(Show)]
+#[derive(Debug)]
 struct Resource {
   x: isize
 }
 
-#[derive(Show)]
+#[derive(Debug)]
 struct ResourceManager {
   items: Vec<Resource>
 }

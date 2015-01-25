@@ -1,14 +1,14 @@
-#[derive(Show)]
+#[derive(Debug)]
 struct Foo {
   value: isize
 }
 
-#[derive(Show)]
+#[derive(Debug)]
 struct Bar {
   data: Option<Box<Foo>>
 }
 
-#[derive(Show)]
+#[derive(Debug)]
 enum BarErr {
   Nope
 }

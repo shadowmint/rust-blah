@@ -1,4 +1,4 @@
-#[derive(Show)]
+#[derive(Debug)]
 struct Indirect<T> {
   _data: T
 }

@@ -5,7 +5,7 @@ use self::libc::malloc;
 use self::libc::free;
 use self::libc::c_void;
 
-#[derive(Show)]
+#[derive(Debug)]
 struct Foo {
   x: isize,
   y: * mut isize

@@ -1,16 +1,16 @@
-#[derive(PartialEq, Show)]
+#[derive(PartialEq, Debug)]
 struct EventOne {
   x: f64,
   y: f64
 }
 
-#[derive(PartialEq, Show)]
+#[derive(PartialEq, Debug)]
 struct EventTwo {
   x: isize,
   y: isize
 }
 
-#[derive(PartialEq, Show)]
+#[derive(PartialEq, Debug)]
 enum ComplexEvent {
   A(EventOne, &'static str),
   B(EventTwo, &'static str)

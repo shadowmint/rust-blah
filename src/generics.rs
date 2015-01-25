@@ -1,4 +1,4 @@
-#[derive(Show)]
+#[derive(Debug)]
 struct Gen<T> {
   data: Option<T>
 }

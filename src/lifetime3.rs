@@ -1,4 +1,4 @@
-#[derive(Show)]
+#[derive(Debug)]
 struct Foo<'a, T:'a> {
   data: &'a T
 }

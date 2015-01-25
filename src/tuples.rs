@@ -1,4 +1,4 @@
-#[derive(Show)] 
+#[derive(Debug)]
 enum MyErr {
   None,
   Fail,
@@ -18,7 +18,7 @@ fn returns_result() -> Result<isize, MyErr> {
 fn test_check_return_values() {
   let x = returns_result();
   if x.is_ok() {
-    trace!("result: Is OK: {:?}", x.unwrap());
+    trace!("result: Is OK: {:?}", x.ok().unwrap());
   }
   else {
     match x.err().unwrap() {
