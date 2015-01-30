@@ -1,5 +1,5 @@
-use std::io::fs;
-use std::io::FileType;
+use std::old_io::fs;
+use std::old_io::FileType;
 
 pub fn walk(path:&'static str) {
   let path = Path::new(path);

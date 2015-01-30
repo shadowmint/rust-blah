@@ -1,4 +1,4 @@
-use std::io::stdio::stdout;
+use std::old_io::stdio::stdout;
 
 fn trace(x:isize) {
   let mut out = stdout();
