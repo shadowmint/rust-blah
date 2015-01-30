@@ -3,7 +3,7 @@ pub fn do_something() -> usize {
 }
 
 struct Blah<'a> {
-  x:&'a (Fn<(),usize> + 'a)
+  x:&'a (Fn() -> usize + 'a)
 }
 
 #[test]
