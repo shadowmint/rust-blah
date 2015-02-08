@@ -8,7 +8,7 @@ fn fp_test() {
      x.call_mut((1is,));
    }
    {
-     let mut y:HasInt = &mut |&mut:_:isize| { trace!("closure"); };
+     let mut y:HasInt = &mut |_:isize| { trace!("closure"); };
      y(2);
    }
 }

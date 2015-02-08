@@ -90,6 +90,6 @@ fn borrow_values_that_match<'a, 'b>(x:&'a HasValues, filter:&'b Fn(isize) -> boo
 #[test]
 fn test_lifetime_scope_with_filter() {
   let mut q = HasValues { values: vec!(1, 2, 3, 4, 5) };
-  let mut p = borrow_values_that_match(&q, &|&:f:isize| -> bool { return f > 2; });
+  let mut p = borrow_values_that_match(&q, &|f:isize| -> bool { return f > 2; });
   trace!("Output of lifetime test: {:?}", p);
 }
