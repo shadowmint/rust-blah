@@ -1,4 +1,4 @@
-trait Foo {
+trait Foo : ::std::marker::MarkerTrait {
   fn foo() -> isize {
     return 1;
   }

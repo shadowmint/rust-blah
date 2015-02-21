@@ -1,3 +1,3 @@
 pub trait Imported {
-  fn hello(x:isize) -> isize;
+  fn hello(&self, x:isize) -> isize;
 }
