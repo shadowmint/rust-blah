@@ -43,6 +43,7 @@ mod find_in_array;
 mod function_pointers;
 mod show_debug;
 mod static_trait_methods;
+mod hetrogenious_vec;
 
 fn main() {
 }
