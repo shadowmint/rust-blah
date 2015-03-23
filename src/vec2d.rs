@@ -31,11 +31,11 @@ impl Index<usize> for Vec2dView {
 #[test]
 fn test_2d() {
   let mut vec = Vec2d { values: Vec::with_capacity(100), width: 10 };
-  for i in range(0, 100) {
+  for i in 0..100 {
     vec.values.push(i);
   }
-  for i in range(0, 10) {
-    for j in range(0, 10) {
+  for i in 0..10 {
+    for j in 0..10 {
       assert!(vec[i][j] == i * 10 + j);
     }
   }
