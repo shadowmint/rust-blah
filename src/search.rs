@@ -15,7 +15,7 @@ fn find_utf_boundary(value:&[u8]) -> isize {
     let tmp:Slice_<u8> = transmute(value);
     let mut maybe_invalid = 0is;
     let mut marker = 0is;
-    for i in range(0, tmp.len) {
+    for i in 0..tmp.len {
       let view:Slice_<u8> = Slice_ { data:tmp.data, len: i };
       let view_as_bytes:&[u8] = transmute(view);
       if from_utf8(view_as_bytes).is_err() {

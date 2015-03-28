@@ -5,7 +5,7 @@ type HasInt<'a> = &'a mut (FnMut(isize) + 'a);
 fn fp_test() {
    {
      let mut x:HasInt = &mut foo;
-     x.call_mut((1is,));
+     x(1isize);
    }
    {
      let mut y:HasInt = &mut |_:isize| { trace!("closure"); };

@@ -12,6 +12,6 @@ impl fmt::Debug for BlahLF {
 
 #[test]
 fn test_show() {
-    let foo = BlahLF { id: 0us };
+    let foo = BlahLF { id: 0usize };
     println!("{:?}", foo);
 }
