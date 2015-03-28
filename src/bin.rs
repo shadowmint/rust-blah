@@ -22,7 +22,6 @@ mod lifetime;
 mod lifetime2;
 mod lifetime3;
 mod map_test;
-mod move_;
 mod mutable_borrow;
 mod nstrcmp;
 mod overload;
