@@ -1,5 +1,8 @@
-#![allow(unstable)]
-#![feature(unboxed_closures)]
+#![feature(core)]
+#![feature(collections)]
+#![feature(unicode)]
+#![feature(libc)]
+#![feature(os)]
 
 #[macro_use]
 extern crate debugging;
@@ -19,10 +22,8 @@ mod lifetime;
 mod lifetime2;
 mod lifetime3;
 mod map_test;
-mod move_;
 mod mutable_borrow;
 mod nstrcmp;
-mod output;
 mod overload;
 mod queue;
 mod ressurect;
@@ -32,10 +33,8 @@ mod traits_namespace;
 mod tuples;
 mod union;
 mod vectors;
-mod walk;
 mod grapheme;
 mod overload_function_with_generic;
-mod vec2d;
 mod search;
 mod hash_test;
 mod sized;
