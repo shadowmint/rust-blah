@@ -28,7 +28,7 @@ impl HasusizeValue for f64 {
 fn test_add_with_int()
 {
   let mut x = Foo { value: 10 };
-  x.add(10is);
+  x.add(10isize);
   assert!(x.value == 20);
 }
 

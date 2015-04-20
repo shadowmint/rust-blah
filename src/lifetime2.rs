@@ -24,9 +24,9 @@ impl<T> Foo<T> {
 
 #[test]
 fn test_lifetime_return_scope() {
-  let bar = Foo { data: Box::new(Foo { data: Box::new(10is) }) };
+  let bar = Foo { data: Box::new(Foo { data: Box::new(10isize) }) };
   {
-    let marker = 10is;
+    let marker = 10isize;
     let marked = bar.returns_to_scope_with_marker(&marker);
     trace!("{:?}", marked);
   }

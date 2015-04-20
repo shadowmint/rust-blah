@@ -4,6 +4,6 @@ impl Foo for usize { fn foo(&self) { println!("Hello"); } }
 
 #[test]
 fn test_sized() {
-  let f:&Bar<Foo> = &(|| -> Bar<usize> { Bar { t: 0us }})();
+  let f:&Bar<Foo> = &(|| -> Bar<usize> { Bar { t: 0usize }})();
   f.t.foo();
 }

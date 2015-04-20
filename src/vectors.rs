@@ -1,6 +1,6 @@
 #[test]
 fn test_vectors() {
-  let x = [1is, 2is, 3is];
+  let x = [1isize, 2isize, 3isize];
   for y in ["1", "2", "3"].iter() {
     trace!("vector: {:?}", y);
   }
