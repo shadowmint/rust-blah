@@ -6,7 +6,3 @@ authors = [ "linderd@iinet.net.au" ]
 [[bin]]
 name = "tests"
 path = "src/bin.rs"
-
-[dependencies.debugging]
-git = "https://github.com/shadowmint/rust-debugging"
-tag = "0.0.1"

@@ -1,33 +1,48 @@
-#[macro_use]
-extern crate debugging;
-pub use self::debugging::debug;
+/**
+ * Debug print immediately to stdout
+ * usage:
+ *
+ *    debug!("Hello: {:?}", 1);
+ */
+#[macro_export]
+macro_rules! trace(
+  {$($arg:tt)*} => {
+    {
+      use debug;
+      use std::io::Write;
+      let _ = debug::stdout().write_fmt(format_args!($($arg)*));
+      let _ = debug::stdout().write(&['\n' as u8]);
+    }
+  };
+);
 
-mod borrow;
-mod cast_to_immutable;
-mod func_ptr;
-mod generics;
-mod imported;
-mod imports;
-mod indirect;
-mod iterators;
-mod lifetime;
-mod lifetime2;
-mod lifetime3;
-mod map_test;
-mod mutable_borrow;
-mod overload;
-mod queue;
-mod trait_ns;
-mod traits;
-mod traits_namespace;
-mod tuples;
-mod union;
-mod vectors;
-mod overload_function_with_generic;
-mod sized;
-mod find_in_array;
-mod function_pointers;
-mod show_debug;
+pub mod debug;
+pub mod borrow;
+pub mod cast_to_immutable;
+pub mod func_ptr;
+pub mod generics;
+pub mod imported;
+pub mod imports;
+pub mod indirect;
+pub mod iterators;
+pub mod lifetime;
+pub mod lifetime2;
+pub mod lifetime3;
+pub mod map_test;
+pub mod mutable_borrow;
+pub mod overload;
+pub mod queue;
+pub mod trait_ns;
+pub mod traits;
+pub mod traits_namespace;
+pub mod tuples;
+pub mod union;
+pub mod vectors;
+pub mod overload_function_with_generic;
+pub mod sized;
+pub mod find_in_array;
+pub mod function_pointers;
+pub mod show_debug;
 
 fn main() {
 }
