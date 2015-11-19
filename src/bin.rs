@@ -44,6 +44,7 @@ pub mod find_in_array;
 pub mod function_pointers;
 pub mod show_debug;
 pub mod fixed_sized_arrays;
+pub mod match_tests;
 
 fn main() {
 }
